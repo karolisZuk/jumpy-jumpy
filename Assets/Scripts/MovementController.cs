@@ -79,8 +79,9 @@ public class MovementController : MonoBehaviour
         if(!isJumping && characterController.isGrounded && isJumpPressed)
         {
             isJumping = true;
-            currentMovement.y = initialJumpVelocity;
-            currentRunMovement.y = initialJumpVelocity;
+
+            currentMovement.y = initialJumpVelocity * .5f;
+            currentRunMovement.y = initialJumpVelocity * .5f;
         } else if(!isJumpPressed && isJumping && characterController.isGrounded)
         {
             isJumping = false;
@@ -95,8 +96,12 @@ public class MovementController : MonoBehaviour
             currentRunMovement.y = groundedGravity;
         } else
         {
-            currentMovement.y += gravity * Time.deltaTime;
-            currentRunMovement.y += gravity * Time.deltaTime;
+            float previousYVelocity = currentMovement.y;
+            float newYVelocity = currentMovement.y + (gravity * Time.deltaTime);
+            float nextYVelocity = (previousYVelocity + newYVelocity) * .5f;
+
+            currentMovement.y = nextYVelocity;
+            currentRunMovement.y = nextYVelocity;
         }
     }
 
