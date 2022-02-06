@@ -10,12 +10,12 @@ public class MovementController : MonoBehaviour
     Animator animator;
 
     Vector2 currentMovementInput;
-    Vector3 currentMovement;
-    Vector3 currentRunMovement;
 
     #region Walking and Running Variables
     bool isMovementPressed;
     bool isRunPressed;
+    Vector3 currentMovement;
+    Vector3 currentRunMovement;
     [Header("Movement")]
     [Range(1, 20)] public float walkMultiplier = 1.2f;
     [Range(1, 40)] public float rotationFactorPerFrame = 15;
@@ -25,6 +25,8 @@ public class MovementController : MonoBehaviour
     #region Animation Hashes
     int isWalkingHash;
     int isRunningHash;
+    int isJumpingHash;
+    int jumpCountHash;
     #endregion
 
     #region Gravity
@@ -35,14 +37,17 @@ public class MovementController : MonoBehaviour
     #endregion
 
     #region Jumping Variables
-    bool isJumpPressed = false;
-    float initialJumpVelocity;
     [Header("Jumping")]
     [Range(0.1f, 20)] public float maxJumpHeight = 0.5f;
     [Range(0.1f, 20)] public float maxJumpTime = 1.0f;
+    float initialJumpVelocity;
     bool isJumping = false;
-    int isJumpingHash;
     bool isJumpAnimating = false;
+    bool isJumpPressed = false;
+    int jumpCount = 0;
+    Dictionary<int, float> initialJumpVelocities = new Dictionary<int, float>();
+    Dictionary<int, float> jumpGravities = new Dictionary<int, float>();
+    Coroutine currentJumpResetCoroutine = null;
     #endregion
 
     private void Awake()
@@ -54,6 +59,7 @@ public class MovementController : MonoBehaviour
         isWalkingHash = Animator.StringToHash("isWalking");
         isRunningHash = Animator.StringToHash("isRunning");
         isJumpingHash = Animator.StringToHash("isJumping");
+        jumpCountHash = Animator.StringToHash("jumpCount");
 
         playerInputActions.CharacterControls.Move.started += OnMovementInput;
         playerInputActions.CharacterControls.Move.canceled += OnMovementInput;
@@ -72,7 +78,21 @@ public class MovementController : MonoBehaviour
     {
         float timeToApex = maxJumpTime / 2;
         gravity = (-2 * maxJumpHeight) / Mathf.Pow(timeToApex, 2);
+        float secondJumpGravity = (-2 * (maxJumpHeight + 2)) / Mathf.Pow((timeToApex * 1.25f), 2);
+        float thirdJumpGravity = (-2 * (maxJumpHeight + 4)) / Mathf.Pow((timeToApex * 1.5f), 2);
+
         initialJumpVelocity = (2 * maxJumpHeight) / timeToApex;
+        float secondJumpInitialVelocity = (2 * (maxJumpHeight + 2)) / (timeToApex * 1.25f);
+        float thirdJumpInitialVelocity = (2 * (maxJumpHeight + 4)) / (timeToApex * 1.5f);
+
+        initialJumpVelocities.Add(1, initialJumpVelocity);
+        initialJumpVelocities.Add(2, secondJumpInitialVelocity);
+        initialJumpVelocities.Add(3, thirdJumpInitialVelocity);
+
+        jumpGravities.Add(0, gravity);
+        jumpGravities.Add(1, gravity);
+        jumpGravities.Add(2, secondJumpGravity);
+        jumpGravities.Add(3, thirdJumpGravity);
     }
 
     void OnJump(InputAction.CallbackContext ctx)
@@ -84,16 +104,27 @@ public class MovementController : MonoBehaviour
     {
         if(!isJumping && characterController.isGrounded && isJumpPressed)
         {
+            if(jumpCount < 3 && currentJumpResetCoroutine != null)
+                StopCoroutine(currentJumpResetCoroutine);
+
             isJumping = true;
+            jumpCount += 1;
+            animator.SetInteger(jumpCountHash, jumpCount);
             isJumpAnimating = true;
             animator.SetBool(isJumpingHash, true);
 
-            currentMovement.y = initialJumpVelocity * .5f;
-            currentRunMovement.y = initialJumpVelocity * .5f;
+            currentMovement.y = initialJumpVelocities[jumpCount] * .5f;
+            currentRunMovement.y = initialJumpVelocities[jumpCount] * .5f;
         } else if(!isJumpPressed && isJumping && characterController.isGrounded)
         {
             isJumping = false;
         }
+    }
+
+    IEnumerator jumpResetRoutine()
+    {
+        yield return new WaitForSeconds(.5f);
+        jumpCount = 0;
     }
 
     void HandleGravity()
@@ -106,6 +137,13 @@ public class MovementController : MonoBehaviour
             {
                 animator.SetBool(isJumpingHash, false);
                 isJumpAnimating = false;
+                currentJumpResetCoroutine = StartCoroutine(jumpResetRoutine());
+
+                if(jumpCount >= 3)
+                {
+                    jumpCount = 0;
+                    animator.SetInteger(jumpCountHash, jumpCount);
+                }
             }
 
             currentMovement.y = groundedGravity;
@@ -113,7 +151,7 @@ public class MovementController : MonoBehaviour
         } else if (isFalling)
         {
             float previousYVelocity = currentMovement.y;
-            float newYVelocity = currentMovement.y + (gravity * fallMultiplier * Time.deltaTime);
+            float newYVelocity = currentMovement.y + (jumpGravities[jumpCount] * fallMultiplier * Time.deltaTime);
             float nextYVelocity = Mathf.Max((previousYVelocity + newYVelocity) * .5f, -20f);
 
             currentMovement.y = nextYVelocity;
@@ -121,7 +159,7 @@ public class MovementController : MonoBehaviour
         } else
         {
             float previousYVelocity = currentMovement.y;
-            float newYVelocity = currentMovement.y + (gravity * Time.deltaTime);
+            float newYVelocity = currentMovement.y + (jumpGravities[jumpCount] * Time.deltaTime);
             float nextYVelocity = (previousYVelocity + newYVelocity) * .5f;
 
             currentMovement.y = nextYVelocity;

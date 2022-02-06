@@ -3646,9 +3646,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cf463685cdeb4b9e8c2017b8bc82030, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  walkMultiplier: 1.2
   rotationFactorPerFrame: 15
   runMultiplier: 3
-  maxJumpHeight: 1.5
+  fallMultiplier: 2
+  maxJumpHeight: 2.6
   maxJumpTime: 1
 --- !u!143 &8296172667409410797
 CharacterController:
