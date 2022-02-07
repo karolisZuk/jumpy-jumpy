@@ -8,6 +8,7 @@ public class PlayerStateMachine : MonoBehaviour
     PlayerInputActions playerInputActions;
     CharacterController characterController;
     Animator animator;
+    PlayerBaseState currentState;
 
     #region Walking and Running Variables
     Vector2 currentMovementInput;
