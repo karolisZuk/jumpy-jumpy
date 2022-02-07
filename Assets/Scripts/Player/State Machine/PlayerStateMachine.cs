@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 public class PlayerStateMachine : MonoBehaviour
 {
     PlayerInputActions playerInputActions;
-    CharacterController characterController;
+    [HideInInspector] public CharacterController characterController;
     [HideInInspector] public Animator animator;
 
     [HideInInspector] public PlayerBaseState currentState;

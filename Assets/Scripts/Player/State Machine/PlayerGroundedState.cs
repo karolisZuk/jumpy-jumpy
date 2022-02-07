@@ -17,6 +17,8 @@ public class PlayerGroundedState : PlayerBaseState
 
     public override void EnterState()
     {
+        ctx.currentMovement.y = ctx.groundedGravity;
+        ctx.appliedMovement.y = ctx.groundedGravity;
     }
 
     public override void ExitState()
