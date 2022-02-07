@@ -5,7 +5,10 @@ using UnityEngine;
 public class PlayerJumpState : PlayerBaseState
 {
     public PlayerJumpState(PlayerStateMachine currentContext, PlayerStateFactory playerStateFactory)
-    : base(currentContext, playerStateFactory) { }
+    : base(currentContext, playerStateFactory) {
+        isRootState = true;
+        InitializeSubState();
+    }
 
     public override void CheckSwitchStates()
     {
@@ -32,6 +35,12 @@ public class PlayerJumpState : PlayerBaseState
 
     public override void InitializeSubState()
     {
+        if (!ctx.isMovementPressed && !ctx.isRunPressed)
+            SetSubState(factory.Idle());
+        else if (ctx.isMovementPressed && !ctx.isRunPressed)
+            SetSubState(factory.Walk());
+        else
+            SetSubState(factory.Run());
     }
 
     public override void UpdateState()
