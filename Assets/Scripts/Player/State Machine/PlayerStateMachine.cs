@@ -7,19 +7,19 @@ public class PlayerStateMachine : MonoBehaviour
 {
     PlayerInputActions playerInputActions;
     CharacterController characterController;
-    Animator animator;
+    [HideInInspector] public Animator animator;
 
-    PlayerBaseState currentState;
+    [HideInInspector] public PlayerBaseState currentState;
     PlayerStateFactory states;
 
     #region Walking and Running Variables
-    Vector2 currentMovementInput;
-    Vector3 currentMovement;
-    Vector3 currentRunMovement;
-    Vector3 appliedMovement;
+    [HideInInspector] public Vector2 currentMovementInput;
+    [HideInInspector] public Vector3 currentMovement;
+    [HideInInspector] public Vector3 currentRunMovement;
+    [HideInInspector] public Vector3 appliedMovement;
 
-    bool isMovementPressed;
-    bool isRunPressed;
+    [HideInInspector] public bool isMovementPressed;
+    [HideInInspector] public bool isRunPressed;
     [Header("Movement")]
     [Range(1, 20)] public float walkMultiplier = 1.2f;
     [Range(1, 40)] public float rotationFactorPerFrame = 15;
@@ -27,26 +27,26 @@ public class PlayerStateMachine : MonoBehaviour
     #endregion
 
     #region Animation Hashes
-    int isWalkingHash;
-    int isRunningHash;
+    [HideInInspector] public int isWalkingHash;
+    [HideInInspector] public int isRunningHash;
     #endregion
 
     #region Gravity
-    float gravity = -9f;
-    float groundedGravity = -0.5f;
+    [HideInInspector] public float gravity = -9f;
+    [HideInInspector] public float groundedGravity = -0.5f;
     [Header("Gravity")]
     [Range(1f, 10)] public float fallMultiplier = 2f;
     #endregion
 
     #region Jumping Variables
-    bool isJumpPressed = false;
-    float initialJumpVelocity;
+    [HideInInspector] public bool isJumpPressed = false;
+    [HideInInspector] public float initialJumpVelocity;
     [Header("Jumping")]
     [Range(0.1f, 20)] public float maxJumpHeight = 0.5f;
     [Range(0.1f, 20)] public float maxJumpTime = 1.0f;
-    bool isJumping = false;
-    int isJumpingHash;
-    bool isJumpAnimating = false;
+    [HideInInspector] public bool isJumping = false;
+    [HideInInspector] public int isJumpingHash;
+    [HideInInspector] public bool isJumpAnimating = false;
     #endregion
 
     private void Awake()
@@ -85,6 +85,7 @@ public class PlayerStateMachine : MonoBehaviour
     private void Update()
     {
         HandleRotation();
+        currentState.UpdateState();
         characterController.Move(appliedMovement * Time.deltaTime);
     }
 

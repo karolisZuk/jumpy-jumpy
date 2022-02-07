@@ -9,26 +9,26 @@ public class PlayerGroundedState : PlayerBaseState
 
     public override void CheckSwitchStates()
     {
-        throw new System.NotImplementedException();
+        if(ctx.isJumpPressed)
+        {
+            SwitchState(factory.Jump());
+        }
     }
 
     public override void EnterState()
     {
-        throw new System.NotImplementedException();
     }
 
     public override void ExitState()
     {
-        throw new System.NotImplementedException();
     }
 
     public override void InitializeSubState()
     {
-        throw new System.NotImplementedException();
     }
 
     public override void UpdateState()
     {
-        throw new System.NotImplementedException();
+        CheckSwitchStates();
     }
 }

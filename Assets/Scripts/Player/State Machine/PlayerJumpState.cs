@@ -9,26 +9,33 @@ public class PlayerJumpState : PlayerBaseState
 
     public override void CheckSwitchStates()
     {
-        throw new System.NotImplementedException();
     }
 
     public override void EnterState()
     {
-        throw new System.NotImplementedException();
+        HandleJump();
     }
 
     public override void ExitState()
     {
-        throw new System.NotImplementedException();
     }
 
     public override void InitializeSubState()
     {
-        throw new System.NotImplementedException();
     }
 
     public override void UpdateState()
     {
-        throw new System.NotImplementedException();
+        CheckSwitchStates();
+    }
+
+    void HandleJump()
+    {
+        ctx.isJumping = true;
+        ctx.isJumpAnimating = true;
+        ctx.animator.SetBool(ctx.isJumpingHash, true);
+
+        ctx.currentMovement.y = ctx.initialJumpVelocity;
+        ctx.appliedMovement.y = ctx.initialJumpVelocity;
     }
 }

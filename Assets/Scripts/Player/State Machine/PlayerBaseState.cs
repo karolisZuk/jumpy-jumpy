@@ -20,13 +20,13 @@ public abstract class PlayerBaseState
 
     void UpdateStates(){}
 
-    void SwitchState(PlayerBaseState newState) {
+    protected void SwitchState(PlayerBaseState newState) {
         ExitState();
         newState.EnterState();
-
+        ctx.currentState = newState;
     }
 
-    void SetSuperState() { }
+    protected void SetSuperState() { }
 
-    void SetSubState() { }
+    protected void SetSubState() { }
 }
