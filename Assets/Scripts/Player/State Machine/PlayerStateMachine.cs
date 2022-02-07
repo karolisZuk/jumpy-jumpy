@@ -85,8 +85,8 @@ public class PlayerStateMachine : MonoBehaviour
     private void Update()
     {
         HandleRotation();
-        currentState.UpdateState();
         characterController.Move(appliedMovement * Time.deltaTime);
+        currentState.UpdateState();
     }
 
     void HandleRotation()

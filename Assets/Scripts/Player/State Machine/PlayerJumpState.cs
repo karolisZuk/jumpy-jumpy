@@ -9,7 +9,6 @@ public class PlayerJumpState : PlayerBaseState
 
     public override void CheckSwitchStates()
     {
-        // TODO: This check never passees
         if(ctx.characterController.isGrounded)
         {
             SwitchState(factory.Grounded());
