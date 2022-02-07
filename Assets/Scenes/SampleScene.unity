@@ -891,6 +891,30 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1403329176}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1892588984 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5208420323637538943, guid: 779aab447fb5f4d1eb380c91410b827b,
+    type: 3}
+  m_PrefabInstance: {fileID: 4281212020523080339}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1892588989
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1892588984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a9d5dcf330e841d9a2d3d886b447eb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  walkMultiplier: 1.2
+  rotationFactorPerFrame: 15
+  runMultiplier: 3
+  fallMultiplier: 2
+  maxJumpHeight: 2.6
+  maxJumpTime: 1
 --- !u!1 &2098709121
 GameObject:
   m_ObjectHideFlags: 0
@@ -995,6 +1019,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4976840515957990887, guid: 779aab447fb5f4d1eb380c91410b827b, type: 3}
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 779aab447fb5f4d1eb380c91410b827b, type: 3}
