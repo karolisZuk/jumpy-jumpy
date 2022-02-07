@@ -3564,8 +3564,8 @@ GameObject:
   m_Component:
   - component: {fileID: 9084709776583148140}
   - component: {fileID: 1196089057480109846}
-  - component: {fileID: 4976840515957990887}
   - component: {fileID: 8296172667409410797}
+  - component: {fileID: 1892588989}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -3634,24 +3634,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &4976840515957990887
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5208420323637538943}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4cf463685cdeb4b9e8c2017b8bc82030, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  walkMultiplier: 1.2
-  rotationFactorPerFrame: 15
-  runMultiplier: 3
-  fallMultiplier: 2
-  maxJumpHeight: 2.6
-  maxJumpTime: 1
 --- !u!143 &8296172667409410797
 CharacterController:
   m_ObjectHideFlags: 0
@@ -3670,6 +3652,41 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.88, z: 0}
+--- !u!114 &1892588989
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5208420323637538943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a9d5dcf330e841d9a2d3d886b447eb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterController: {fileID: 0}
+  animator: {fileID: 0}
+  currentMovementInput: {x: 0, y: 0}
+  currentMovement: {x: 0, y: 0, z: 0}
+  currentRunMovement: {x: 0, y: 0, z: 0}
+  appliedMovement: {x: 0, y: 0, z: 0}
+  isMovementPressed: 0
+  isRunPressed: 0
+  walkMultiplier: 1.2
+  rotationFactorPerFrame: 15
+  runMultiplier: 3
+  isWalkingHash: 0
+  isRunningHash: 0
+  gravity: -9
+  groundedGravity: -0.5
+  fallMultiplier: 2
+  isJumpPressed: 0
+  initialJumpVelocity: 0
+  maxJumpHeight: 2.6
+  maxJumpTime: 1
+  isJumping: 0
+  isJumpingHash: 0
+  requireNewJumpPress: 0
 --- !u!1 &5220147470776796186
 GameObject:
   m_ObjectHideFlags: 0

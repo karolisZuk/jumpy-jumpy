@@ -9,7 +9,7 @@ public class PlayerGroundedState : PlayerBaseState
 
     public override void CheckSwitchStates()
     {
-        if(ctx.isJumpPressed)
+        if(ctx.isJumpPressed && !ctx.requireNewJumpPress)
         {
             SwitchState(factory.Jump());
         }

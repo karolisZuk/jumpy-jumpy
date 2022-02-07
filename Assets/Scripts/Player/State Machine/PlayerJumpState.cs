@@ -23,7 +23,11 @@ public class PlayerJumpState : PlayerBaseState
     public override void ExitState()
     {
         ctx.animator.SetBool(ctx.isJumpingHash, false);
-        ctx.isJumpAnimating = false;
+
+        if(ctx.isJumpPressed)
+        {
+            ctx.requireNewJumpPress = true;
+        }
     }
 
     public override void InitializeSubState()
@@ -39,7 +43,6 @@ public class PlayerJumpState : PlayerBaseState
     void HandleJump()
     {
         ctx.isJumping = true;
-        ctx.isJumpAnimating = true;
         ctx.animator.SetBool(ctx.isJumpingHash, true);
 
         ctx.currentMovement.y = ctx.initialJumpVelocity;

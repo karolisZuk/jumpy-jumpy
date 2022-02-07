@@ -46,7 +46,7 @@ public class PlayerStateMachine : MonoBehaviour
     [Range(0.1f, 20)] public float maxJumpTime = 1.0f;
     [HideInInspector] public bool isJumping = false;
     [HideInInspector] public int isJumpingHash;
-    [HideInInspector] public bool isJumpAnimating = false;
+    [HideInInspector] public bool requireNewJumpPress;
     #endregion
 
     private void Awake()
@@ -129,6 +129,7 @@ public class PlayerStateMachine : MonoBehaviour
     void OnJump(InputAction.CallbackContext ctx)
     {
         isJumpPressed = ctx.ReadValueAsButton();
+        requireNewJumpPress = false;
     }
 
     void OnRun(InputAction.CallbackContext ctx)
