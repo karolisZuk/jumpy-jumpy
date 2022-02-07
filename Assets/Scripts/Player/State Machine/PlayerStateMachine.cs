@@ -8,7 +8,9 @@ public class PlayerStateMachine : MonoBehaviour
     PlayerInputActions playerInputActions;
     CharacterController characterController;
     Animator animator;
+
     PlayerBaseState currentState;
+    PlayerStateFactory states;
 
     #region Walking and Running Variables
     Vector2 currentMovementInput;
@@ -49,6 +51,10 @@ public class PlayerStateMachine : MonoBehaviour
 
     private void Awake()
     {
+        states = new PlayerStateFactory(this);
+        currentState = states.Grounded();
+        currentState.EnterState();
+
         #region Set Member Variable
         playerInputActions = new PlayerInputActions();
         characterController = GetComponent<CharacterController>();

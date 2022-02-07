@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class PlayerIdleState : PlayerBaseState
 {
+    public PlayerIdleState(PlayerStateMachine currentContext, PlayerStateFactory playerStateFactory)
+    : base (currentContext, playerStateFactory) {}
+
     public override void CheckSwitchStates()
     {
         throw new System.NotImplementedException();
