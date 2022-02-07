@@ -9,12 +9,12 @@ public class MovementController : MonoBehaviour
     CharacterController characterController;
     Animator animator;
 
+    #region Walking and Running Variables
     Vector2 currentMovementInput;
     Vector3 currentMovement;
     Vector3 currentRunMovement;
     Vector3 appliedMovement;
 
-    #region Walking and Running Variables
     bool isMovementPressed;
     bool isRunPressed;
     [Header("Movement")]
