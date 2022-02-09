@@ -5,12 +5,10 @@ using UnityEngine;
 public class Locomotion : MonoBehaviour
 {
     PlayerInputController input;
-    CharacterController characterController;
     Animator animator;
 
     Vector3 currentMovement;
     Vector3 currentRunMovement;
-    Vector3 appliedMovement;
 
     int isRunningHash;
     int isWalkingHash;
@@ -24,7 +22,6 @@ public class Locomotion : MonoBehaviour
     private void Awake()
     {
         input = GetComponent<PlayerInputController>();
-        characterController = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
 
         isWalkingHash = Animator.StringToHash("isWalking");
