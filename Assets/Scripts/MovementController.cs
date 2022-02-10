@@ -21,6 +21,7 @@ public class MovementController : MonoBehaviour
     [Range(1, 20)] public float walkMultiplier = 1.2f;
     [Range(1, 40)] public float rotationFactorPerFrame = 15;
     [Range(1, 20)] public float runMultiplier = 3f;
+    [SerializeField] private bool alwaysRun;
     #endregion
 
     #region Animation Hashes
@@ -130,14 +131,18 @@ public class MovementController : MonoBehaviour
         bool isRunning = animator.GetBool(isRunningHash);
 
         if(isMovementPressed && !isWalking)
+        {
             animator.SetBool(isWalkingHash, true);
-        else if (!isMovementPressed && isWalking)
+        } else if (!isMovementPressed && isWalking)
             animator.SetBool(isWalkingHash, false);
 
         if((isMovementPressed && isRunPressed) && !isRunning)
+        {
             animator.SetBool(isRunningHash, true);
-        else if ((!isMovementPressed || !isRunPressed) && isRunning)
+        } else if ((!isMovementPressed || !isRunPressed) && isRunning)
+        {
             animator.SetBool(isRunningHash, false);
+        }
     }
 
     void HandleRotation()
@@ -166,9 +171,9 @@ public class MovementController : MonoBehaviour
     void OnMovementInput(InputAction.CallbackContext ctx)
     {
         currentMovementInput = ctx.ReadValue<Vector2>();
+
         currentMovement.x = currentMovementInput.x * walkMultiplier;
         currentMovement.z = currentMovementInput.y * walkMultiplier;
-
         currentRunMovement.x = currentMovementInput.x * runMultiplier;
         currentRunMovement.z = currentMovementInput.y * runMultiplier;
 

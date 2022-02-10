@@ -1612,8 +1612,7 @@ GameObject:
   - component: {fileID: 1684465993124074448}
   - component: {fileID: 8784956226945842858}
   - component: {fileID: 1896823153877662545}
-  - component: {fileID: 1891478847859563395}
-  - component: {fileID: 3576620250538268221}
+  - component: {fileID: 1741257123}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1660,7 +1659,7 @@ Transform:
   - {fileID: 6129063579994435898}
   - {fileID: 4252273760879772282}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &8784956226945842858
 Animator:
@@ -1700,7 +1699,7 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.88, z: 0}
---- !u!114 &1891478847859563395
+--- !u!114 &1741257123
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1709,26 +1708,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 2394566165334860227}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c812bfcab34bb4131b3db510f04dc4be, type: 3}
+  m_Script: {fileID: 11500000, guid: 4cf463685cdeb4b9e8c2017b8bc82030, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  alwaysRun: 1
-  appliedMovement: {x: 0, y: 0, z: 0}
---- !u!114 &3576620250538268221
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2394566165334860227}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b141d2a461c640af8e0afc233de8d41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rotationSpeed: 25
   walkMultiplier: 1.2
+  rotationFactorPerFrame: 15
   runMultiplier: 3
+  alwaysRun: 1
+  fallMultiplier: 2
+  maxJumpHeight: 2
+  maxJumpTime: 1
 --- !u!1 &2771547630101637528
 GameObject:
   m_ObjectHideFlags: 0
