@@ -36,10 +36,10 @@ ModelImporter:
       name: stand to roll
       takeName: mixamo.com
       internalID: -203655887218126122
-      firstFrame: 6
-      lastFrame: 64
+      firstFrame: 10
+      lastFrame: 57
       wrapMode: 0
-      orientationOffsetY: 0
+      orientationOffsetY: -35
       level: 0
       cycleOffset: 0
       loop: 0

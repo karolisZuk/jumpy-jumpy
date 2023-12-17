@@ -21,6 +21,7 @@ public class MovementController : MonoBehaviour {
     [Range(1, 20)] public float walkMultiplier = 1.2f;
     [Range(1, 40)] public float rotationFactorPerFrame = 15;
     [Range(1, 20)] public float runMultiplier = 3f;
+    [Range(1, 20)] public float dodgeMultiplier = 6f;
     [Range(0, 1)] public float smoothInputSpeed;
     [SerializeField] private bool alwaysRun = true;
 
@@ -93,6 +94,7 @@ public class MovementController : MonoBehaviour {
     private void Update() {
         HandleRotation();
         HandleAnimation();
+        HandleDodge();
 
         currentVectorInput = Vector2.SmoothDamp(currentVectorInput, currentMovementInput, ref smoothInputVelocity, smoothInputSpeed);
 
@@ -107,6 +109,13 @@ public class MovementController : MonoBehaviour {
             currentMovement.z = 0;
             currentRunMovement.x = 0;
             currentRunMovement.z = 0;
+        }
+
+        if (isDodging) {
+            currentMovement.x = currentMovement.x * dodgeMultiplier;
+            currentMovement.z = currentMovement.z * dodgeMultiplier;
+            currentRunMovement.x = currentRunMovement.x * dodgeMultiplier;
+            currentRunMovement.z = currentRunMovement.z * dodgeMultiplier;
         }
 
         if (isRunPressed) {
@@ -124,6 +133,22 @@ public class MovementController : MonoBehaviour {
         HandleJump();
     }
 
+    void HandleDodge() {
+        if (characterController.isGrounded && !isDodging && !isJumping && isDodgePressed) {
+            animator.SetTrigger("Dodge");
+            isDodging = true;
+            isDodgePressed = false;
+
+            StartCoroutine(StopDodge());
+        }
+
+    }
+
+    private IEnumerator StopDodge() {
+        yield return new WaitForSeconds(0.5f);
+        isDodging = false;
+    }
+
     void SetupJumpVariables() {
         float timeToApex = maxJumpTime / 2;
         gravity = (-2 * maxJumpHeight) / Mathf.Pow(timeToApex, 2);
@@ -139,7 +164,7 @@ public class MovementController : MonoBehaviour {
     }
 
     void HandleJump() {
-        if (!isJumping && characterController.isGrounded && isJumpPressed) {
+        if (!isJumping && !isDodging && characterController.isGrounded && isJumpPressed) {
             isJumping = true;
             isJumpAnimating = true;
             animator.SetBool(isJumpingHash, true);
@@ -217,7 +242,7 @@ public class MovementController : MonoBehaviour {
 
         Quaternion currentRotation = transform.rotation;
 
-        if(isMovementPressed) {
+        if(isMovementPressed && positionToLookAt.sqrMagnitude != 0) {
             Quaternion targetRotation = Quaternion.LookRotation(positionToLookAt);
             transform.rotation = Quaternion.Slerp(currentRotation, targetRotation, rotationFactorPerFrame * Time.deltaTime);
         }
