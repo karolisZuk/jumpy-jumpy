@@ -12,4 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 312d86236b9204bf6bcc48c877fab62b, type: 3}
   m_Name: Player Consumable Items
   m_EditorClassIdentifier: 
-  Container: []
+  database: {fileID: 11400000, guid: 082b6004d12c64f25a747d27de85bba1, type: 2}
+  Container:
+  - ID: 0
+    item: {fileID: 11400000, guid: 167c9782aa6f54804b8e33c33cd9a1eb, type: 2}
+    amount: 10
