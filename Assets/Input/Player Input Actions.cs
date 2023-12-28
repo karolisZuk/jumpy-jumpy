@@ -377,6 +377,24 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SaveTest"",
+                    ""type"": ""Button"",
+                    ""id"": ""b553053c-5ab8-48c3-874a-c251ed438b93"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LoadTest"",
+                    ""type"": ""Button"",
+                    ""id"": ""69b8e72f-5f93-436e-bca4-1f76b2fe993f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -445,6 +463,28 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""PreviousTab"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d3dcfefe-a216-4ba4-805d-e99eaa66727a"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SaveTest"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9ef2c739-d400-4362-9cb1-9bc9bbc66c15"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LoadTest"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -465,6 +505,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_MenuControls_HideMenu = m_MenuControls.FindAction("HideMenu", throwIfNotFound: true);
         m_MenuControls_NextTab = m_MenuControls.FindAction("NextTab", throwIfNotFound: true);
         m_MenuControls_PreviousTab = m_MenuControls.FindAction("PreviousTab", throwIfNotFound: true);
+        m_MenuControls_SaveTest = m_MenuControls.FindAction("SaveTest", throwIfNotFound: true);
+        m_MenuControls_LoadTest = m_MenuControls.FindAction("LoadTest", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -623,6 +665,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_MenuControls_HideMenu;
     private readonly InputAction m_MenuControls_NextTab;
     private readonly InputAction m_MenuControls_PreviousTab;
+    private readonly InputAction m_MenuControls_SaveTest;
+    private readonly InputAction m_MenuControls_LoadTest;
     public struct MenuControlsActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -630,6 +674,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @HideMenu => m_Wrapper.m_MenuControls_HideMenu;
         public InputAction @NextTab => m_Wrapper.m_MenuControls_NextTab;
         public InputAction @PreviousTab => m_Wrapper.m_MenuControls_PreviousTab;
+        public InputAction @SaveTest => m_Wrapper.m_MenuControls_SaveTest;
+        public InputAction @LoadTest => m_Wrapper.m_MenuControls_LoadTest;
         public InputActionMap Get() { return m_Wrapper.m_MenuControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -648,6 +694,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @PreviousTab.started += instance.OnPreviousTab;
             @PreviousTab.performed += instance.OnPreviousTab;
             @PreviousTab.canceled += instance.OnPreviousTab;
+            @SaveTest.started += instance.OnSaveTest;
+            @SaveTest.performed += instance.OnSaveTest;
+            @SaveTest.canceled += instance.OnSaveTest;
+            @LoadTest.started += instance.OnLoadTest;
+            @LoadTest.performed += instance.OnLoadTest;
+            @LoadTest.canceled += instance.OnLoadTest;
         }
 
         private void UnregisterCallbacks(IMenuControlsActions instance)
@@ -661,6 +713,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @PreviousTab.started -= instance.OnPreviousTab;
             @PreviousTab.performed -= instance.OnPreviousTab;
             @PreviousTab.canceled -= instance.OnPreviousTab;
+            @SaveTest.started -= instance.OnSaveTest;
+            @SaveTest.performed -= instance.OnSaveTest;
+            @SaveTest.canceled -= instance.OnSaveTest;
+            @LoadTest.started -= instance.OnLoadTest;
+            @LoadTest.performed -= instance.OnLoadTest;
+            @LoadTest.canceled -= instance.OnLoadTest;
         }
 
         public void RemoveCallbacks(IMenuControlsActions instance)
@@ -693,5 +751,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnHideMenu(InputAction.CallbackContext context);
         void OnNextTab(InputAction.CallbackContext context);
         void OnPreviousTab(InputAction.CallbackContext context);
+        void OnSaveTest(InputAction.CallbackContext context);
+        void OnLoadTest(InputAction.CallbackContext context);
     }
 }

@@ -6642,7 +6642,7 @@ PrefabInstance:
     - target: {fileID: 3138589315882943035, guid: 1f3cc52ee737d43f0a5af591eabf1d72,
         type: 3}
       propertyPath: clearOnQuit
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3138589315882943035, guid: 1f3cc52ee737d43f0a5af591eabf1d72,
         type: 3}

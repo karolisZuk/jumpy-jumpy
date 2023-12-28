@@ -26,7 +26,7 @@ public class EquipmentController : MonoBehaviour {
     [SerializeField] private InventoryObject consumablesInventory;
     [SerializeField] private InventoryObject questItemsInventory;
 
-    Dictionary<InventorySlot, GameObject> itemsDisplayed = new Dictionary<InventorySlot, GameObject>();
+    List<GameObject> itemsDisplayed = new List<GameObject>();
 
     [Header("Pickups")]
     [SerializeField] private LayerMask itemLayer;
@@ -38,7 +38,20 @@ public class EquipmentController : MonoBehaviour {
         playerInputActions.CharacterControls.Enable();
 
         playerInputActions.CharacterControls.ShowMenu.started += OnShowMenu;
+
+        // TODO: Testing items saving and loading
+        playerInputActions.MenuControls.SaveTest.started += SaveTest_started;
+        playerInputActions.MenuControls.LoadTest.started += LoadTest_started;
+
         PlayerMenu.OnMenuClose += OnHideMenu;
+    }
+
+    private void SaveTest_started(InputAction.CallbackContext obj) {
+        SaveInventory();
+    }
+
+    private void LoadTest_started(InputAction.CallbackContext obj) {
+        LoadInventory();
     }
 
     public void OnTriggerEnter(Collider other) {
@@ -59,10 +72,34 @@ public class EquipmentController : MonoBehaviour {
         }
     }
 
+    public void SaveInventory() {
+        equipmentInventory.Save();
+        consumablesInventory.Save();
+        questItemsInventory.Save();
+    }
+
+    public void LoadInventory() {
+        equipmentInventory.Load();
+        consumablesInventory.Load();
+        questItemsInventory.Load();
+
+        foreach (GameObject go in itemsDisplayed) {
+            Destroy(go);
+        }
+
+        itemsDisplayed.Clear();
+
+        CreateInventoryDisplay();
+    }
+
     private void OnHideMenu(object sender, EventArgs e) {
         playerInputActions.CharacterControls.Enable();
 
-        // TODO: Delete and Remove all instantiated items after menu is closed
+        foreach(GameObject go in itemsDisplayed) {
+            Destroy(go);
+        }
+
+        itemsDisplayed.Clear();
     }
 
     private void OnShowMenu(InputAction.CallbackContext obj) {
@@ -81,7 +118,7 @@ public class EquipmentController : MonoBehaviour {
             obj.GetComponent<RectTransform>().localPosition = GetPosition(i, equipmentInventoryPanel.GetComponent<RectTransform>());
             obj.GetComponentInChildren<TextMeshProUGUI>().text = equipmentInventory.Container[i].amount.ToString("n0");
 
-            itemsDisplayed.Add(equipmentInventory.Container[i], obj);
+            itemsDisplayed.Add(obj);
         }
     }
 
