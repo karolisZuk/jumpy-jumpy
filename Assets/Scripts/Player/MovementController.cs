@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -63,7 +64,7 @@ public class MovementController : MonoBehaviour {
     #endregion
 
     private void Awake() {
-        playerInputActions = new PlayerInputActions();
+        playerInputActions = PlayerInputs.Instance.PlayerInputActions();
         characterController = GetComponent<CharacterController>();
 
         isWalkingHash = Animator.StringToHash("isWalking");
@@ -104,13 +105,6 @@ public class MovementController : MonoBehaviour {
         currentRunMovement.x = currentVectorInput.x * runMultiplier;
         currentRunMovement.z = currentVectorInput.y * runMultiplier;
 
-        if(isLandingAnimating) {
-            currentMovement.x = 0;
-            currentMovement.z = 0;
-            currentRunMovement.x = 0;
-            currentRunMovement.z = 0;
-        }
-
         if (isDodging) {
             currentMovement.x = currentMovement.x * dodgeMultiplier;
             currentMovement.z = currentMovement.z * dodgeMultiplier;
@@ -126,6 +120,15 @@ public class MovementController : MonoBehaviour {
             appliedMovement.z = currentMovement.z;
         }
 
+        if (isLandingAnimating) {
+            currentMovement.x = 0;
+            currentMovement.z = 0;
+            currentRunMovement.x = 0;
+            currentRunMovement.z = 0;
+            appliedMovement.x = 0;
+            appliedMovement.z = 0;
+        }
+
         characterController.Move(appliedMovement * Time.deltaTime);
         animator.SetFloat("InputMagnitude", currentVectorInput.magnitude);
 
@@ -135,6 +138,7 @@ public class MovementController : MonoBehaviour {
 
     void HandleDodge() {
         if (characterController.isGrounded && !isDodging && !isJumping && isDodgePressed) {
+            // TODO: Shrink hit collider when dodging
             animator.SetTrigger("Dodge");
             isDodging = true;
             isDodgePressed = false;

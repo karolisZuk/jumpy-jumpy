@@ -62,6 +62,33 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""UseL"",
+                    ""type"": ""Button"",
+                    ""id"": ""e7331f97-6cb0-470f-b518-7d8fcac2285e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""UseR"",
+                    ""type"": ""Button"",
+                    ""id"": ""23805bb9-1529-468a-92f6-9021475eb913"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ShowMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""94dd0723-9d0a-469c-815f-ff1a8e8ad4d6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -251,6 +278,173 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""Dodge"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5b9a18ae-5999-43a9-a7af-9e93841de266"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UseR"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""28c36385-0593-4ddd-a54e-d7172d063131"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UseR"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4f7e51aa-6a44-4c27-addf-72b163c6f9ba"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UseL"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""38604947-894d-4f94-985e-564e1fa3fc78"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UseL"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""04904d96-ce2c-443a-a0ad-a0bd9cd735e7"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ShowMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e6af4e31-5530-43db-b07c-2bd995572e31"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ShowMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""MenuControls"",
+            ""id"": ""339f1e10-d6c5-444d-9933-3d4a58f7b088"",
+            ""actions"": [
+                {
+                    ""name"": ""HideMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""1e9441c1-fea6-45b5-9a12-78f7c8a76705"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""NextTab"",
+                    ""type"": ""Button"",
+                    ""id"": ""12049150-251c-4040-a8a1-0466ee36d03a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PreviousTab"",
+                    ""type"": ""Button"",
+                    ""id"": ""b665b195-a741-4b6a-bc30-c12dfb4a4904"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""8904cb71-5c5e-4a69-964f-47be530c0570"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""HideMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2e72c499-4dfb-4f2b-8e42-b24861e7ebd2"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""HideMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4a1c442f-123c-484d-a9aa-409198b6552e"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""NextTab"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""98099063-e7d7-4db8-b1b0-aba04b18a43f"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""NextTab"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9212db1f-6adb-4606-96f3-b80aaaf1eb40"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PreviousTab"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1459115e-bb99-4b08-898f-0c975952b91a"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PreviousTab"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -263,6 +457,14 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_CharacterControls_Run = m_CharacterControls.FindAction("Run", throwIfNotFound: true);
         m_CharacterControls_Jump = m_CharacterControls.FindAction("Jump", throwIfNotFound: true);
         m_CharacterControls_Dodge = m_CharacterControls.FindAction("Dodge", throwIfNotFound: true);
+        m_CharacterControls_UseL = m_CharacterControls.FindAction("UseL", throwIfNotFound: true);
+        m_CharacterControls_UseR = m_CharacterControls.FindAction("UseR", throwIfNotFound: true);
+        m_CharacterControls_ShowMenu = m_CharacterControls.FindAction("ShowMenu", throwIfNotFound: true);
+        // MenuControls
+        m_MenuControls = asset.FindActionMap("MenuControls", throwIfNotFound: true);
+        m_MenuControls_HideMenu = m_MenuControls.FindAction("HideMenu", throwIfNotFound: true);
+        m_MenuControls_NextTab = m_MenuControls.FindAction("NextTab", throwIfNotFound: true);
+        m_MenuControls_PreviousTab = m_MenuControls.FindAction("PreviousTab", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -328,6 +530,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_CharacterControls_Run;
     private readonly InputAction m_CharacterControls_Jump;
     private readonly InputAction m_CharacterControls_Dodge;
+    private readonly InputAction m_CharacterControls_UseL;
+    private readonly InputAction m_CharacterControls_UseR;
+    private readonly InputAction m_CharacterControls_ShowMenu;
     public struct CharacterControlsActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -336,6 +541,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @Run => m_Wrapper.m_CharacterControls_Run;
         public InputAction @Jump => m_Wrapper.m_CharacterControls_Jump;
         public InputAction @Dodge => m_Wrapper.m_CharacterControls_Dodge;
+        public InputAction @UseL => m_Wrapper.m_CharacterControls_UseL;
+        public InputAction @UseR => m_Wrapper.m_CharacterControls_UseR;
+        public InputAction @ShowMenu => m_Wrapper.m_CharacterControls_ShowMenu;
         public InputActionMap Get() { return m_Wrapper.m_CharacterControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -357,6 +565,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Dodge.started += instance.OnDodge;
             @Dodge.performed += instance.OnDodge;
             @Dodge.canceled += instance.OnDodge;
+            @UseL.started += instance.OnUseL;
+            @UseL.performed += instance.OnUseL;
+            @UseL.canceled += instance.OnUseL;
+            @UseR.started += instance.OnUseR;
+            @UseR.performed += instance.OnUseR;
+            @UseR.canceled += instance.OnUseR;
+            @ShowMenu.started += instance.OnShowMenu;
+            @ShowMenu.performed += instance.OnShowMenu;
+            @ShowMenu.canceled += instance.OnShowMenu;
         }
 
         private void UnregisterCallbacks(ICharacterControlsActions instance)
@@ -373,6 +590,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Dodge.started -= instance.OnDodge;
             @Dodge.performed -= instance.OnDodge;
             @Dodge.canceled -= instance.OnDodge;
+            @UseL.started -= instance.OnUseL;
+            @UseL.performed -= instance.OnUseL;
+            @UseL.canceled -= instance.OnUseL;
+            @UseR.started -= instance.OnUseR;
+            @UseR.performed -= instance.OnUseR;
+            @UseR.canceled -= instance.OnUseR;
+            @ShowMenu.started -= instance.OnShowMenu;
+            @ShowMenu.performed -= instance.OnShowMenu;
+            @ShowMenu.canceled -= instance.OnShowMenu;
         }
 
         public void RemoveCallbacks(ICharacterControlsActions instance)
@@ -390,11 +616,82 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         }
     }
     public CharacterControlsActions @CharacterControls => new CharacterControlsActions(this);
+
+    // MenuControls
+    private readonly InputActionMap m_MenuControls;
+    private List<IMenuControlsActions> m_MenuControlsActionsCallbackInterfaces = new List<IMenuControlsActions>();
+    private readonly InputAction m_MenuControls_HideMenu;
+    private readonly InputAction m_MenuControls_NextTab;
+    private readonly InputAction m_MenuControls_PreviousTab;
+    public struct MenuControlsActions
+    {
+        private @PlayerInputActions m_Wrapper;
+        public MenuControlsActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @HideMenu => m_Wrapper.m_MenuControls_HideMenu;
+        public InputAction @NextTab => m_Wrapper.m_MenuControls_NextTab;
+        public InputAction @PreviousTab => m_Wrapper.m_MenuControls_PreviousTab;
+        public InputActionMap Get() { return m_Wrapper.m_MenuControls; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(MenuControlsActions set) { return set.Get(); }
+        public void AddCallbacks(IMenuControlsActions instance)
+        {
+            if (instance == null || m_Wrapper.m_MenuControlsActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_MenuControlsActionsCallbackInterfaces.Add(instance);
+            @HideMenu.started += instance.OnHideMenu;
+            @HideMenu.performed += instance.OnHideMenu;
+            @HideMenu.canceled += instance.OnHideMenu;
+            @NextTab.started += instance.OnNextTab;
+            @NextTab.performed += instance.OnNextTab;
+            @NextTab.canceled += instance.OnNextTab;
+            @PreviousTab.started += instance.OnPreviousTab;
+            @PreviousTab.performed += instance.OnPreviousTab;
+            @PreviousTab.canceled += instance.OnPreviousTab;
+        }
+
+        private void UnregisterCallbacks(IMenuControlsActions instance)
+        {
+            @HideMenu.started -= instance.OnHideMenu;
+            @HideMenu.performed -= instance.OnHideMenu;
+            @HideMenu.canceled -= instance.OnHideMenu;
+            @NextTab.started -= instance.OnNextTab;
+            @NextTab.performed -= instance.OnNextTab;
+            @NextTab.canceled -= instance.OnNextTab;
+            @PreviousTab.started -= instance.OnPreviousTab;
+            @PreviousTab.performed -= instance.OnPreviousTab;
+            @PreviousTab.canceled -= instance.OnPreviousTab;
+        }
+
+        public void RemoveCallbacks(IMenuControlsActions instance)
+        {
+            if (m_Wrapper.m_MenuControlsActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IMenuControlsActions instance)
+        {
+            foreach (var item in m_Wrapper.m_MenuControlsActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_MenuControlsActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public MenuControlsActions @MenuControls => new MenuControlsActions(this);
     public interface ICharacterControlsActions
     {
         void OnMove(InputAction.CallbackContext context);
         void OnRun(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnDodge(InputAction.CallbackContext context);
+        void OnUseL(InputAction.CallbackContext context);
+        void OnUseR(InputAction.CallbackContext context);
+        void OnShowMenu(InputAction.CallbackContext context);
+    }
+    public interface IMenuControlsActions
+    {
+        void OnHideMenu(InputAction.CallbackContext context);
+        void OnNextTab(InputAction.CallbackContext context);
+        void OnPreviousTab(InputAction.CallbackContext context);
     }
 }
