@@ -14,7 +14,8 @@ public class WindowGroup : MonoBehaviour {
             }
         }
 
-        TabGroup.OnMainMenuTabChange += TabGroup_OnMainMenuTabChange;
+        // TODO: Might remove later
+        //TabGroup.OnMainMenuTabChange += TabGroup_OnMainMenuTabChange;
     }
 
     private void TabGroup_OnMainMenuTabChange(object sender, int index) {

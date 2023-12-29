@@ -1,8 +1,53 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using System;
 
+
+public class TabGroup: MonoBehaviour {
+    [SerializeField] private List<TabItem> tabButtons;
+    [SerializeField] private Sprite tabIdle;
+    [SerializeField] private Sprite tabHover;
+    [SerializeField] private Sprite tabActive;
+    [SerializeField] private TabItem selectedTab;
+
+    public void Subscribe(TabItem button) {
+        if (tabButtons == null) {
+            tabButtons = new List<TabItem>();
+        }
+
+        tabButtons.Add(button);
+    }
+
+    public void OnTabEnter(TabItem button) {
+        ResetTabs();
+
+        if (selectedTab == null || button != selectedTab) {
+            button.background.sprite = tabHover;
+        }
+    }
+
+    public void OnTabExit(TabItem button) {
+        ResetTabs();
+    }
+
+    public void OnTabSelected(TabItem button) {
+        selectedTab = button;
+        ResetTabs();
+        button.background.sprite = tabActive;
+    }
+
+    public void ResetTabs() {
+        foreach(TabItem button in tabButtons) {
+            if (selectedTab != null && button == selectedTab) continue;
+
+            button.background.sprite = tabIdle;
+        }
+    }
+}
+
+/**
 public class TabGroup : MonoBehaviour {
     public static event EventHandler<int> OnMainMenuTabChange;
 
@@ -70,3 +115,4 @@ public class TabGroup : MonoBehaviour {
         playerInputActions.MenuControls.Disable();
     }
 }
+**/
