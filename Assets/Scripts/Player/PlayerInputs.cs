@@ -6,8 +6,11 @@ public class PlayerInputs : MonoBehaviour {
     public enum GameDevice { KeyboardMouse, Gamepad }
     public static PlayerInputs Instance { get; private set; }
 
-    // TODO: Move all input action subscriptions to this file and fire custom events for each action
     public event EventHandler OnGameDeviceChanged;
+
+    // Menu Events
+    public event EventHandler OnMenuNextTab;
+    public event EventHandler OnMenuPreviousTab;
 
     private PlayerInputActions playerInputActions;
     private GameDevice activeGameDevice;
@@ -28,7 +31,20 @@ public class PlayerInputs : MonoBehaviour {
         InputSystem.onActionChange += InputSystem_onActionChange;
 
         playerInputActions.Enable();
+
+        playerInputActions.MenuControls.NextTab.started += Menu_NextTab_started;
+        playerInputActions.MenuControls.PreviousTab.started += Menu_PreviousTab_started;
     }
+
+    #region MENU_ACTIONS
+    private void Menu_PreviousTab_started(InputAction.CallbackContext obj) {
+        OnMenuPreviousTab?.Invoke(this, EventArgs.Empty);
+    }
+
+    private void Menu_NextTab_started(InputAction.CallbackContext obj) {
+        OnMenuNextTab?.Invoke(this, EventArgs.Empty);
+    }
+    #endregion
 
     private void InputSystem_onActionChange(object arg1, InputActionChange inputActionChange) {
         if (inputActionChange == InputActionChange.ActionPerformed && arg1 is InputAction) {
@@ -74,5 +90,8 @@ public class PlayerInputs : MonoBehaviour {
 
     private void OnDestroy() {
         InputSystem.onActionChange -= InputSystem_onActionChange;
+
+        playerInputActions.MenuControls.NextTab.started -= Menu_NextTab_started;
+        playerInputActions.MenuControls.PreviousTab.started -= Menu_PreviousTab_started;
     }
 }

@@ -6,18 +6,59 @@ using System;
 
 
 public class TabGroup: MonoBehaviour {
+    [SerializeField] private List<GameObject> objectsToSwap;
     [SerializeField] private List<TabItem> tabButtons;
+    [SerializeField] private TabItem selectedTab;
+
+    [Header("UI")]
     [SerializeField] private Sprite tabIdle;
     [SerializeField] private Sprite tabHover;
     [SerializeField] private Sprite tabActive;
-    [SerializeField] private TabItem selectedTab;
 
-    public void Subscribe(TabItem button) {
-        if (tabButtons == null) {
-            tabButtons = new List<TabItem>();
+    private void Awake() {
+        PlayerInputs.Instance.OnMenuNextTab += PlayerInputs_OnMenuNextTab;
+        PlayerInputs.Instance.OnMenuPreviousTab += PlayerInputs_OnMenuPreviousTab;
+    }
+
+    private void Start() {
+        if (selectedTab != null) {
+            StartCoroutine(Preselect(selectedTab));
+        }
+    }
+
+    IEnumerator Preselect (TabItem selectedTab) {
+        yield return new WaitForSeconds(1);
+        OnTabSelected(selectedTab);
+    }
+
+    private void PlayerInputs_OnMenuNextTab(object sender, EventArgs e) {
+        if (selectedTab == null) {
+            OnTabSelected(tabButtons[0]);
+            return;
         }
 
-        tabButtons.Add(button);
+        int currentIndex = selectedTab.transform.GetSiblingIndex();
+
+        if (currentIndex < tabButtons.Count - 1) {
+            OnTabSelected(tabButtons[currentIndex + 1]);
+        } else {
+            OnTabSelected(tabButtons[0]);
+        }
+    }
+
+    private void PlayerInputs_OnMenuPreviousTab(object sender, EventArgs e) {
+        if (selectedTab == null) {
+            OnTabSelected(tabButtons[0]);
+            return;
+        }
+
+        int currentIndex = selectedTab.transform.GetSiblingIndex();
+
+        if (currentIndex > 0) {
+            OnTabSelected(tabButtons[currentIndex - 1]);
+        } else {
+            OnTabSelected(tabButtons[tabButtons.Count - 1]);
+        }
     }
 
     public void OnTabEnter(TabItem button) {
@@ -33,86 +74,31 @@ public class TabGroup: MonoBehaviour {
     }
 
     public void OnTabSelected(TabItem button) {
+        if (selectedTab != null) {
+            selectedTab.Deselect();
+        }
+
         selectedTab = button;
+
+        selectedTab.Select();
+
         ResetTabs();
         button.background.sprite = tabActive;
+        int index = button.transform.GetSiblingIndex();
+
+        for(int i = 0; i < objectsToSwap.Count; i++) {
+            if (i == index) {
+                objectsToSwap[i].SetActive(true);
+            } else {
+                objectsToSwap[i].SetActive(false);
+            }
+        }
     }
 
     public void ResetTabs() {
         foreach(TabItem button in tabButtons) {
             if (selectedTab != null && button == selectedTab) continue;
-
             button.background.sprite = tabIdle;
         }
     }
 }
-
-/**
-public class TabGroup : MonoBehaviour {
-    public static event EventHandler<int> OnMainMenuTabChange;
-
-    [SerializeField] private List<TabItem> tabItems = new List<TabItem>();
-    [SerializeField] private int preselectedTab = 0;
-
-    PlayerInputActions playerInputActions;
-
-    private int currentSelectionIndex = 0;
-
-    private void Awake() {
-        currentSelectionIndex = preselectedTab;
-
-        if (currentSelectionIndex > tabItems.Count - 1) {
-            Debug.LogError("TabGroup: preselected tab does not exist");
-            return;
-        }
-
-        if (tabItems.Count > 0) {
-            foreach(TabItem tab in tabItems) {
-                tab.Deselect();
-            }
-        }
-    }
-
-    private void Start() {
-        tabItems[currentSelectionIndex].Select();
-        OnMainMenuTabChange?.Invoke(this, currentSelectionIndex);
-
-        playerInputActions = PlayerInputs.Instance.PlayerInputActions();
-
-        playerInputActions.MenuControls.NextTab.started += NextTab_started;
-        playerInputActions.MenuControls.PreviousTab.started += PreviousTab_started;
-    }
-
-    private void PreviousTab_started(UnityEngine.InputSystem.InputAction.CallbackContext obj) {
-        if (currentSelectionIndex > 0) {
-            tabItems[currentSelectionIndex].Deselect();
-            currentSelectionIndex -= 1;
-            tabItems[currentSelectionIndex].Select();
-        } else {
-            tabItems[currentSelectionIndex].Deselect();
-            currentSelectionIndex = tabItems.Count - 1;
-            tabItems[currentSelectionIndex].Select();
-        }
-
-        OnMainMenuTabChange?.Invoke(this, currentSelectionIndex);
-    }
-
-    private void NextTab_started(UnityEngine.InputSystem.InputAction.CallbackContext obj) {
-        if (currentSelectionIndex < tabItems.Count - 1) {
-            tabItems[currentSelectionIndex].Deselect();
-            currentSelectionIndex += 1;
-            tabItems[currentSelectionIndex].Select();
-        } else {
-            tabItems[currentSelectionIndex].Deselect();
-            currentSelectionIndex = 0;
-            tabItems[currentSelectionIndex].Select();
-        }
-
-        OnMainMenuTabChange?.Invoke(this, currentSelectionIndex);
-    }
-
-    private void OnDisable() {
-        playerInputActions.MenuControls.Disable();
-    }
-}
-**/
