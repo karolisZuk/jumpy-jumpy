@@ -1018,10 +1018,12 @@ GameObject:
   - component: {fileID: 6967373274795556162}
   - component: {fileID: 150942960640387778}
   - component: {fileID: 3138589315882943035}
-  m_Layer: 0
+  - component: {fileID: 6952056483518922957}
+  - component: {fileID: 5115114000579937274}
+  m_Layer: 8
   m_Name: Player Obj
   m_TagString: Player
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -1040,7 +1042,7 @@ Transform:
   - {fileID: 1719092030002687028}
   - {fileID: 6625625127287824248}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!143 &549569943167825155
 CharacterController:
@@ -1062,7 +1064,7 @@ CharacterController:
   m_Enabled: 1
   serializedVersion: 3
   m_Height: 1.56
-  m_Radius: 0.4
+  m_Radius: 0.3
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
@@ -1081,12 +1083,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 6258160302546395036}
+  landingParticles: {fileID: 4514597317879345990, guid: 0f3d94cb11ecf47178adcee21dca610e,
+    type: 3}
   walkMultiplier: 1.2
-  rotationFactorPerFrame: 15
-  runMultiplier: 4
-  dodgeMultiplier: 1.2
+  rotationFactorPerFrame: 30
+  runMultiplier: 4.5
+  dodgeMultiplier: 6.5
   smoothInputSpeed: 0.15
   alwaysRun: 1
+  forceCollider: {fileID: 5115114000579937274}
   fallMultiplier: 1.5
   maxJumpHeight: 2
   maxJumpTime: 0.8
@@ -1120,9 +1125,9 @@ MonoBehaviour:
   equipmentPointLeft: {fileID: 1076138515326793455}
   equipmentPointRight: {fileID: 2072332135215851105}
   clearOnQuit: 1
-  X_SPACE_BETWEEN_ITEM: 0
-  Y_SPACE_BETWEEN_ITEM: 0
-  NUMBER_OF_COLUMNS: 0
+  X_SPACE_BETWEEN_ITEM: 80
+  Y_SPACE_BETWEEN_ITEM: 80
+  NUMBER_OF_COLUMNS: 10
   equipmentUICell: {fileID: 5036363161630187156, guid: 7e710988ba6d34375841700190a1dbff,
     type: 3}
   equipmentInventoryPanel: {fileID: 0}
@@ -1134,6 +1139,56 @@ MonoBehaviour:
   itemLayer:
     serializedVersion: 2
     m_Bits: 128
+--- !u!54 &6952056483518922957
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1965575058594968752}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 2
+  m_Constraints: 0
+  m_CollisionDetection: 1
+--- !u!136 &5115114000579937274
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1965575058594968752}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.3
+  m_Height: 1.56
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.8, z: 0}
 --- !u!1 &2072332135215851105
 GameObject:
   m_ObjectHideFlags: 0

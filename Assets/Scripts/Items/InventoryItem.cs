@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class InventoryItem : ScriptableObject {
     [SerializeField] protected string label;
+    [SerializeField] public bool isStackable;
     [TextArea(15, 20)] public string description;
     [SerializeField] private Sprite inventoryIcon;
     [SerializeField] private InventoryItemType type;

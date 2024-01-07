@@ -22,7 +22,7 @@ public class InventoryObject : ScriptableObject, ISerializationCallbackReceiver 
 
     public void AddItem(InventoryItem _item, int _amount) {
         foreach(InventorySlot slot in Container) {
-            if(slot.item == _item) {
+            if(slot.item == _item && _item.isStackable) {
                 slot.AddAmount(_amount);
                 return;
             }

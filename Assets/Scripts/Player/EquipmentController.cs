@@ -113,10 +113,12 @@ public class EquipmentController : MonoBehaviour {
             InventoryItem item = equipmentInventory.Container[i].item;
             Sprite sprite = item.InventoryIcon();
             GameObject obj = Instantiate(equipmentUICell, equipmentInventoryPanel.transform);
+            InventoryItemCell cell = obj.GetComponent<InventoryItemCell>();
 
             obj.GetComponent<Image>().sprite = sprite;
             obj.GetComponent<RectTransform>().localPosition = GetPosition(i, equipmentInventoryPanel.GetComponent<RectTransform>());
             obj.GetComponentInChildren<TextMeshProUGUI>().text = equipmentInventory.Container[i].amount.ToString("n0");
+            cell.SetItem(item);
 
             itemsDisplayed.Add(obj);
         }

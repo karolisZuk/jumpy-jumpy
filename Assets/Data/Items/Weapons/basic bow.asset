@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: basic bow
   m_EditorClassIdentifier: 
   label: Basic Bow
+  isStackable: 0
   description: Will work most of times
   inventoryIcon: {fileID: 21300000, guid: e421200dd8e1b4742964b2a69da1c963, type: 3}
   type: 0
   prefab: {fileID: 5535313429754664582, guid: 71d6a35dceceb4478919472b8ccd60c2, type: 3}
   animationName: Shoot
   damage: 10
-  canPush: 0
+  canPush: 1
