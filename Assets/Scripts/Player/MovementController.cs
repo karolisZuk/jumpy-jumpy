@@ -8,6 +8,7 @@ public class MovementController : MonoBehaviour {
     PlayerInputActions playerInputActions;
     CharacterController characterController;
     [SerializeField] private Animator animator;
+    [SerializeField] private GameObject landingParticles;
 
     Vector2 currentMovementInput;
     Vector3 currentMovement;
@@ -56,6 +57,7 @@ public class MovementController : MonoBehaviour {
     int isLandingHash;
     bool isJumpAnimating = false;
     bool isLandingAnimating = false;
+    private Coroutine isJumpParticlesRunning;
     #endregion
 
     #region Dodge
@@ -173,17 +175,26 @@ public class MovementController : MonoBehaviour {
             isJumpAnimating = true;
             animator.SetBool(isJumpingHash, true);
 
+            InstantiateLandingDust();
+
             currentMovement.y = initialJumpVelocity;
             appliedMovement.y = initialJumpVelocity;
 
-            RaycastHit hit;
-            if (Physics.Raycast(new Vector3(transform.position.x, transform.position.y + characterController.height, transform.position.z), transform.TransformDirection(Vector3.up), out hit, 1f, environment)) {
-                isJumpPressed = false;
-            }
-
         } else if (!isJumpPressed && isJumping && characterController.isGrounded) {
             isJumping = false;
+            InstantiateLandingDust();
         }
+
+        RaycastHit hit;
+        if (Physics.Raycast(new Vector3(transform.position.x, transform.position.y + characterController.height, transform.position.z), transform.TransformDirection(Vector3.up), out hit, 1f, environment)) {
+            isJumpPressed = false;
+        }
+    }
+
+    void InstantiateLandingDust() {
+        GameObject go = Instantiate(landingParticles);
+        go.SetActive(true);
+        go.transform.position = new Vector3(transform.position.x, 0.49f, transform.position.z);
     }
 
     void HandleGravity() {
