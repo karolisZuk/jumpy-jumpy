@@ -14,6 +14,7 @@ public class MovementController : MonoBehaviour {
     Vector3 currentMovement;
     Vector3 currentRunMovement;
     Vector3 appliedMovement;
+    Vector2 lastDirectionInput;
 
     #region Walking and Running Variables
     bool isMovementPressed;
@@ -26,9 +27,12 @@ public class MovementController : MonoBehaviour {
     [Range(1, 20)] public float dodgeMultiplier = 6f;
     [Range(0, 1)] public float smoothInputSpeed;
     [SerializeField] private bool alwaysRun = true;
+    [SerializeField] private Collider forceCollider;
+    private bool isForceModeEnabled = false;
 
     private Vector2 currentVectorInput;
     private Vector2 smoothInputVelocity;
+    private Rigidbody rb;
     #endregion
 
     #region Animation Hashes
@@ -57,7 +61,6 @@ public class MovementController : MonoBehaviour {
     int isLandingHash;
     bool isJumpAnimating = false;
     bool isLandingAnimating = false;
-    private Coroutine isJumpParticlesRunning;
     #endregion
 
     #region Dodge
@@ -68,6 +71,8 @@ public class MovementController : MonoBehaviour {
     private void Awake() {
         playerInputActions = PlayerInputs.Instance.PlayerInputActions();
         characterController = GetComponent<CharacterController>();
+        rb = GetComponent<Rigidbody>();
+        forceCollider.enabled = false;
 
         isWalkingHash = Animator.StringToHash("isWalking");
         isRunningHash = Animator.StringToHash("isRunning");
@@ -107,13 +112,6 @@ public class MovementController : MonoBehaviour {
         currentRunMovement.x = currentVectorInput.x * runMultiplier;
         currentRunMovement.z = currentVectorInput.y * runMultiplier;
 
-        if (isDodging) {
-            currentMovement.x = currentMovement.x * dodgeMultiplier;
-            currentMovement.z = currentMovement.z * dodgeMultiplier;
-            currentRunMovement.x = currentRunMovement.x * dodgeMultiplier;
-            currentRunMovement.z = currentRunMovement.z * dodgeMultiplier;
-        }
-
         if (isRunPressed) {
             appliedMovement.x = currentRunMovement.x;
             appliedMovement.z = currentRunMovement.z;
@@ -131,19 +129,49 @@ public class MovementController : MonoBehaviour {
             appliedMovement.z = 0;
         }
 
-        characterController.Move(appliedMovement * Time.deltaTime);
-        animator.SetFloat("InputMagnitude", currentVectorInput.magnitude);
+        if(!isForceModeEnabled) {
+            characterController.Move(appliedMovement * Time.deltaTime);
+            animator.SetFloat("InputMagnitude", currentVectorInput.magnitude);
+        }
+        
 
         HandleGravity();
         HandleJump();
+
+        if(currentMovement.x != 0 || currentMovement.z != 0) {
+            lastDirectionInput = new Vector2(currentMovement.x, currentMovement.z);
+        }
+    }
+
+    private void EnableForceMode() {
+        isForceModeEnabled = true;
+        rb.isKinematic = false;
+        rb.detectCollisions = true;
+        characterController.enabled = false;
+        forceCollider.enabled = true;
+    }
+
+    private void DisableForceMode() {
+        isForceModeEnabled = false;
+        rb.isKinematic = true;
+        rb.detectCollisions = false;
+        characterController.enabled = true;
+        forceCollider.enabled = false;
     }
 
     void HandleDodge() {
+        if (lastDirectionInput.sqrMagnitude < 0.5f) {
+            return;
+        }
+
         if (characterController.isGrounded && !isDodging && !isJumping && isDodgePressed) {
             // TODO: Shrink hit collider when dodging
+            EnableForceMode();
             animator.SetTrigger("Dodge");
             isDodging = true;
             isDodgePressed = false;
+
+            rb.AddForce(new Vector3(transform.forward.x, 0.1f, transform.forward.z) * dodgeMultiplier, ForceMode.Impulse);
 
             StartCoroutine(StopDodge());
         }
@@ -153,6 +181,7 @@ public class MovementController : MonoBehaviour {
     private IEnumerator StopDodge() {
         yield return new WaitForSeconds(0.5f);
         isDodging = false;
+        DisableForceMode();
     }
 
     void SetupJumpVariables() {
@@ -199,6 +228,16 @@ public class MovementController : MonoBehaviour {
 
     void HandleGravity() {
         bool isFalling = currentMovement.y <= 0f || !isJumpPressed;
+
+        if (isForceModeEnabled) {
+            RaycastHit hit;
+            if (!Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, 1f, environment)) {
+                // Apply gravity directly
+                rb.AddForce(-transform.up * 4.5f);
+            }
+
+            return;
+        }
 
         if (characterController.isGrounded) {
             if (isJumpAnimating) {
@@ -249,6 +288,8 @@ public class MovementController : MonoBehaviour {
     }
 
     void HandleRotation() {
+        if (isDodging) return;
+
         Vector3 positionToLookAt;
 
         positionToLookAt.x = currentMovement.x;
