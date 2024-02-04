@@ -5229,6 +5229,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 845409881}
   m_PrefabAsset: {fileID: 0}
+--- !u!95 &1420753562 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 6258160302546395036, guid: 1f3cc52ee737d43f0a5af591eabf1d72,
+    type: 3}
+  m_PrefabInstance: {fileID: 311430552340121137}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1471119897
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5735,6 +5741,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4750afc299af94301b7846961e1521f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1726207546 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5036363161630187156, guid: 7e710988ba6d34375841700190a1dbff,
+    type: 3}
+  m_PrefabInstance: {fileID: 949849100}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1737710569
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6864,6 +6876,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e67e7c436517f45cf86d8860a0846721, type: 3}
+--- !u!1 &1903832271 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5036363161630187156, guid: 7e710988ba6d34375841700190a1dbff,
+    type: 3}
+  m_PrefabInstance: {fileID: 2064807692}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1983256141 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7772697601351072222, guid: 8a4c42529385c4ad09ca9f23d0a7b39a,
@@ -7469,6 +7487,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3138589315882943035, guid: 1f3cc52ee737d43f0a5af591eabf1d72,
         type: 3}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 1420753562}
+    - target: {fileID: 3138589315882943035, guid: 1f3cc52ee737d43f0a5af591eabf1d72,
+        type: 3}
       propertyPath: NUMBER_OF_COLUMNS
       value: 8
       objectReference: {fileID: 0}
@@ -7482,6 +7505,16 @@ PrefabInstance:
       propertyPath: Y_SPACE_BETWEEN_ITEM
       value: 138
       objectReference: {fileID: 0}
+    - target: {fileID: 3138589315882943035, guid: 1f3cc52ee737d43f0a5af591eabf1d72,
+        type: 3}
+      propertyPath: inventoryLeftHandSlot
+      value: 
+      objectReference: {fileID: 1903832271}
+    - target: {fileID: 3138589315882943035, guid: 1f3cc52ee737d43f0a5af591eabf1d72,
+        type: 3}
+      propertyPath: inventoryRightHandSlot
+      value: 
+      objectReference: {fileID: 1726207546}
     - target: {fileID: 3138589315882943035, guid: 1f3cc52ee737d43f0a5af591eabf1d72,
         type: 3}
       propertyPath: equipmentInventoryPanel

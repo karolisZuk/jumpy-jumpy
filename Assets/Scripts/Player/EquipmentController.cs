@@ -9,6 +9,8 @@ using TMPro;
 public class EquipmentController : MonoBehaviour {
     public static event EventHandler OnMenuOpen;
 
+    [SerializeField] private Animator animator;
+
     [Header("Equipment points")]
     [SerializeField] private GameObject equipmentPointLeft;
     [SerializeField] private GameObject equipmentPointRight;
@@ -20,6 +22,8 @@ public class EquipmentController : MonoBehaviour {
     [SerializeField] private int NUMBER_OF_COLUMNS;
     [SerializeField] private GameObject equipmentUICell;
     [SerializeField] private GameObject equipmentInventoryPanel;
+    [SerializeField] private GameObject inventoryLeftHandSlot;
+    [SerializeField] private GameObject inventoryRightHandSlot;
 
     [Header("Inventories")]
     [SerializeField] private InventoryObject equipmentInventory;
@@ -44,6 +48,7 @@ public class EquipmentController : MonoBehaviour {
         playerInputActions.MenuControls.LoadTest.started += LoadTest_started;
 
         PlayerMenu.OnMenuClose += OnHideMenu;
+        InventoryItemCell.OnEquipItem += InventoryItemCell_OnEquipItem;
     }
 
     private void SaveTest_started(InputAction.CallbackContext obj) {
@@ -124,6 +129,44 @@ public class EquipmentController : MonoBehaviour {
         }
     }
 
+    private void InventoryItemCell_OnEquipItem(object sender, EquipActionTO e) {
+        GameObject slot = null;
+
+        if (e.slot == EquipmentSlot.LeftHand) {
+            slot = inventoryLeftHandSlot;
+        } else if (e.slot == EquipmentSlot.RightHand) {
+            slot = inventoryRightHandSlot;
+        }
+
+        if (slot == null) return;
+
+        Image img = slot.GetComponent<Image>();
+        img.sprite = e.inventoryItem.InventoryIcon();
+        // TODO: Save previous color when item is unequipted
+        img.color = Color.white;
+
+        // Remove equipted item from items displayed
+        GameObject toRemove = null;
+        foreach(GameObject item in itemsDisplayed) {
+            InventoryItemCell cell = item.GetComponent<InventoryItemCell>();
+
+            if (cell.GetItem().GetInstanceID() == e.inventoryItem.GetInstanceID()) {
+                toRemove = item;
+                break;
+            }
+        }
+
+        itemsDisplayed.Remove(toRemove);
+        Destroy(toRemove);
+
+        if (e.inventoryItem is IEquiptable) {
+            GameObject s = e.slot == EquipmentSlot.LeftHand ? equipmentPointLeft : equipmentPointRight;
+            (e.inventoryItem as IEquiptable).Equip(s, animator);
+        }
+
+        // TODO: Add item abilities to be usable
+    }
+
     private Vector3 GetPosition(int i, RectTransform parent) {
         float X_START = -parent.offsetMin.x + 40f;
         float Y_START = (-parent.offsetMin.y / 2f) - 20f;
@@ -145,4 +188,8 @@ public class EquipmentController : MonoBehaviour {
             }
         }
     }
+}
+
+public enum EquipmentSlot {
+    LeftHand, RightHand
 }

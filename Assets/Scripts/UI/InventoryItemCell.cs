@@ -1,10 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class InventoryItemCell : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler {
+    public static event EventHandler<EquipActionTO> OnEquipItem;
+
     private PlayerInputActions controls;
     private bool isHoveredOver = false;
     private InventoryItem cellItem;
@@ -16,27 +17,23 @@ public class InventoryItemCell : MonoBehaviour, IPointerEnterHandler, IPointerEx
     }
 
     private void EquipLeft_performed(InputAction.CallbackContext obj) {
-        if(isHoveredOver) {
-            Debug.Log("TODO: Left" + cellItem.name);
-
-            // TODO: Bubble up static event for equipment controller.
-            // Controller should remove item from items slots and
-            // add item to equipted slot
+        if (isHoveredOver) {
+            OnEquipItem?.Invoke(this, new EquipActionTO(cellItem, EquipmentSlot.LeftHand));
         }
     }
 
     private void EquipRight_performed(InputAction.CallbackContext obj) {
         if (isHoveredOver) {
-            Debug.Log("TODO: Right" + cellItem.name);
-
-            // TODO: Bubble up static event for equipment controller.
-            // Controller should remove item from items slots and
-            // add item to equipted slot
+            OnEquipItem?.Invoke(this, new EquipActionTO(cellItem, EquipmentSlot.RightHand));
         }
     }
 
     public void SetItem(InventoryItem item) {
         cellItem = item;
+    }
+
+    public InventoryItem GetItem() {
+        return cellItem;
     }
 
     public void OnPointerEnter(PointerEventData eventData) {
@@ -47,5 +44,15 @@ public class InventoryItemCell : MonoBehaviour, IPointerEnterHandler, IPointerEx
 
     public void OnPointerExit(PointerEventData eventData) {
         isHoveredOver = false;
+    }
+}
+
+public struct EquipActionTO {
+    public InventoryItem inventoryItem;
+    public EquipmentSlot slot;
+
+    public EquipActionTO(InventoryItem inventoryItem, EquipmentSlot slot) {
+        this.inventoryItem = inventoryItem;
+        this.slot = slot;
     }
 }

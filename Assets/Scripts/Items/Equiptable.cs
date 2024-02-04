@@ -10,12 +10,17 @@ public class Equiptable : InventoryItem, IEquiptable {
 
     public virtual void Equip(GameObject targetPoint, Animator anim) {
         animator = anim;
-        // Spawn prefab at target point and set spawnedPrefab to store it
-        // Set needed prefab params
+        spawnedPrefab = Instantiate(prefab);
+        spawnedPrefab.transform.localPosition = targetPoint.transform.position;
+        spawnedPrefab.transform.localScale = Vector3.one;
+
+        spawnedPrefab.transform.SetParent(targetPoint.transform);
     }
 
     public void Unequip() {
         // Destroy Spawned Prefab
+        Destroy(spawnedPrefab);
+        spawnedPrefab = null;
     }
 }
 
