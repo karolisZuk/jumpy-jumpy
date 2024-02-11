@@ -3,14 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CombatController : MonoBehaviour, ICombatParticipant {
-    private int health;
+    [SerializeField] private int maxHealth;
+    private int currentHealth;
+    private bool isDead = false;
+
+    private void Start() {
+        currentHealth = maxHealth;
+    }
 
     public void Die() {
-        throw new System.NotImplementedException();
+        isDead = true;
+        // TODO: Clean up
     }
 
     public int GetHealth() {
-        throw new System.NotImplementedException();
+        return currentHealth;
+    }
+
+    public bool IsAlive() {
+        return !isDead;
+    }
+
+    public bool IsDead() {
+        return isDead;
     }
 
     public void GetPushed(Vector3 dir) {
@@ -18,6 +33,10 @@ public class CombatController : MonoBehaviour, ICombatParticipant {
     }
 
     public void TakeDamage(int damage) {
-        throw new System.NotImplementedException();
-    }
+        currentHealth -= damage;
+
+        if(currentHealth <= 0) {
+            Die();
+        }
+     }
 }

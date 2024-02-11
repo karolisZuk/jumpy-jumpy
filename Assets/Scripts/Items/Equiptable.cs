@@ -6,25 +6,27 @@ public class Equiptable : InventoryItem, IEquiptable {
     [SerializeField] private GameObject prefab;
 
     protected Animator animator;
-    private GameObject spawnedPrefab;
+    protected EquipmentSlot equipmentSlot;
+    protected GameObject spawnedPrefab;
 
-    public virtual void Equip(GameObject targetPoint, Animator anim) {
+    public virtual void Equip(GameObject targetPoint, Quaternion initialRotation, Animator anim, EquipmentSlot slot) {
+        // Set variables
         animator = anim;
-        spawnedPrefab = Instantiate(prefab);
-        spawnedPrefab.transform.localPosition = targetPoint.transform.position;
-        spawnedPrefab.transform.localScale = Vector3.one;
+        equipmentSlot = slot;
 
+        // Spawn prefab and parent it to correct location
+        spawnedPrefab = Instantiate(prefab, targetPoint.transform.position, initialRotation);
+        spawnedPrefab.transform.localScale = Vector3.one;
         spawnedPrefab.transform.SetParent(targetPoint.transform);
     }
 
     public void Unequip() {
-        // Destroy Spawned Prefab
         Destroy(spawnedPrefab);
         spawnedPrefab = null;
     }
 }
 
 public interface IEquiptable {
-    public abstract void Equip(GameObject targetPoint, Animator anim);
+    public abstract void Equip(GameObject targetPoint, Quaternion initialRotation, Animator anim, EquipmentSlot slot);
     public abstract void Unequip();
 }

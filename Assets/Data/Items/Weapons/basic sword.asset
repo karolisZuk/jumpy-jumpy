@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: basic sword
   m_EditorClassIdentifier: 
   label: Simple Sword
+  isStackable: 0
   description: A very basic test sword, for a very basic person.
   inventoryIcon: {fileID: 21300000, guid: fe8fc90e95a1a477c92f6c621b2e85ab, type: 3}
   type: 0
@@ -20,3 +21,4 @@ MonoBehaviour:
   animationName: Slash
   damage: 20
   canPush: 1
+  cooldown: 0.8

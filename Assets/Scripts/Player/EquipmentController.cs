@@ -161,10 +161,8 @@ public class EquipmentController : MonoBehaviour {
 
         if (e.inventoryItem is IEquiptable) {
             GameObject s = e.slot == EquipmentSlot.LeftHand ? equipmentPointLeft : equipmentPointRight;
-            (e.inventoryItem as IEquiptable).Equip(s, animator);
+            (e.inventoryItem as IEquiptable).Equip(s, transform.rotation, animator, e.slot);
         }
-
-        // TODO: Add item abilities to be usable
     }
 
     private Vector3 GetPosition(int i, RectTransform parent) {

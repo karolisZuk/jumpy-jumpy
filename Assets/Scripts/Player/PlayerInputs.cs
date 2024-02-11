@@ -23,7 +23,6 @@ public class PlayerInputs : MonoBehaviour {
 
         Instance = this;
 
-        Instance = this;
         transform.parent = null;
         DontDestroyOnLoad(gameObject);
 
@@ -78,6 +77,26 @@ public class PlayerInputs : MonoBehaviour {
 
     public GameDevice GetActiveGameDevice() {
         return activeGameDevice;
+    }
+
+    public void AssignEquipmentControls(EquipmentSlot slot, IUsable equipment) {
+        if (slot == EquipmentSlot.LeftHand) {
+            playerInputActions.CharacterControls.UseL.started += equipment.Use;
+        }
+
+        if (slot == EquipmentSlot.RightHand) {
+            playerInputActions.CharacterControls.UseR.started += equipment.Use;
+        }
+    }
+
+    public void ClearEquipmentControls(EquipmentSlot slot, IUsable equipment) {
+        if (slot == EquipmentSlot.LeftHand) {
+            playerInputActions.CharacterControls.UseL.started -= equipment.Use;
+        }
+
+        if (slot == EquipmentSlot.RightHand) {
+            playerInputActions.CharacterControls.UseR.started -= equipment.Use;
+        }
     }
 
     public PlayerInputActions PlayerInputActions () {
