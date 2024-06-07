@@ -146,7 +146,6 @@ public class EquipmentController : MonoBehaviour {
     }
 
     private void InventoryItemCell_OnUnequipItem(object sender, EquipActionTO e) {
-
         // Destroy spawned gameobject
         for (int i = spawnedFieldItems.Count - 1; i > -1; --i) {
             Weapon weapon = spawnedFieldItems[i].GetComponent<Weapon>();
@@ -198,16 +197,27 @@ public class EquipmentController : MonoBehaviour {
     }
 
     private void SetEquiptedItemSlotIcons(List<GameObject> slots, EquipActionTO e) {
-        foreach(GameObject slot in slots) {
+        RemoveItemIconFromItemsList(e);
+
+        foreach (GameObject slot in slots) {
+            EquipmentCell cell = slot.GetComponent<EquipmentCell>();
+
+            // Cell is not empty
+            if (cell.GetItem() != null) {
+                InventoryItem item = cell.GetItem();
+
+                InventoryItemCell_OnUnequipItem(this, new EquipActionTO(item, e.slot));
+                cell.RemoveItem();
+            }
+
             Image img = slot.GetComponent<Image>();
             img.sprite = e.inventoryItem.InventoryIcon();
-            // TODO: Save previous color when item is unequipted
             img.color = Color.white;
-
-            IInventoryCell cell = slot.GetComponent<IInventoryCell>();
 
             cell.SetItem(e.inventoryItem);
         }
+
+        CreateInventoryDisplay();
     }
 
     private void RemoveItemIconFromItemsList(EquipActionTO e) {
