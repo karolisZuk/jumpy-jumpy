@@ -415,16 +415,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""EquipLeft"",
-                    ""type"": ""Button"",
-                    ""id"": ""707aa2f8-59b8-41c7-8262-af63108e483f"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""EquipRight"",
+                    ""name"": ""Equip"",
                     ""type"": ""Button"",
                     ""id"": ""c8a7ad3b-a4f6-4c37-b81b-77abed802d93"",
                     ""expectedControlType"": ""Button"",
@@ -590,34 +581,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""677f1ff6-f4bf-47bb-b21a-24d9ee9d8895"",
-                    ""path"": ""<Gamepad>/leftTrigger"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""EquipLeft"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""b3c440e4-548d-42df-9bec-e728256ba837"",
-                    ""path"": ""<Keyboard>/q"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""EquipLeft"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""c8090a4a-0401-41b1-9822-f4de1b05fa60"",
                     ""path"": ""<Gamepad>/rightTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""EquipRight"",
+                    ""action"": ""Equip"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -628,7 +597,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""EquipRight"",
+                    ""action"": ""Equip"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1193,8 +1162,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_MenuControls_LoadTest = m_MenuControls.FindAction("LoadTest", throwIfNotFound: true);
         m_MenuControls_CursorControl = m_MenuControls.FindAction("CursorControl", throwIfNotFound: true);
         m_MenuControls_Interact = m_MenuControls.FindAction("Interact", throwIfNotFound: true);
-        m_MenuControls_EquipLeft = m_MenuControls.FindAction("EquipLeft", throwIfNotFound: true);
-        m_MenuControls_EquipRight = m_MenuControls.FindAction("EquipRight", throwIfNotFound: true);
+        m_MenuControls_Equip = m_MenuControls.FindAction("Equip", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1369,8 +1337,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_MenuControls_LoadTest;
     private readonly InputAction m_MenuControls_CursorControl;
     private readonly InputAction m_MenuControls_Interact;
-    private readonly InputAction m_MenuControls_EquipLeft;
-    private readonly InputAction m_MenuControls_EquipRight;
+    private readonly InputAction m_MenuControls_Equip;
     public struct MenuControlsActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -1382,8 +1349,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @LoadTest => m_Wrapper.m_MenuControls_LoadTest;
         public InputAction @CursorControl => m_Wrapper.m_MenuControls_CursorControl;
         public InputAction @Interact => m_Wrapper.m_MenuControls_Interact;
-        public InputAction @EquipLeft => m_Wrapper.m_MenuControls_EquipLeft;
-        public InputAction @EquipRight => m_Wrapper.m_MenuControls_EquipRight;
+        public InputAction @Equip => m_Wrapper.m_MenuControls_Equip;
         public InputActionMap Get() { return m_Wrapper.m_MenuControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1414,12 +1380,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Interact.started += instance.OnInteract;
             @Interact.performed += instance.OnInteract;
             @Interact.canceled += instance.OnInteract;
-            @EquipLeft.started += instance.OnEquipLeft;
-            @EquipLeft.performed += instance.OnEquipLeft;
-            @EquipLeft.canceled += instance.OnEquipLeft;
-            @EquipRight.started += instance.OnEquipRight;
-            @EquipRight.performed += instance.OnEquipRight;
-            @EquipRight.canceled += instance.OnEquipRight;
+            @Equip.started += instance.OnEquip;
+            @Equip.performed += instance.OnEquip;
+            @Equip.canceled += instance.OnEquip;
         }
 
         private void UnregisterCallbacks(IMenuControlsActions instance)
@@ -1445,12 +1408,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Interact.started -= instance.OnInteract;
             @Interact.performed -= instance.OnInteract;
             @Interact.canceled -= instance.OnInteract;
-            @EquipLeft.started -= instance.OnEquipLeft;
-            @EquipLeft.performed -= instance.OnEquipLeft;
-            @EquipLeft.canceled -= instance.OnEquipLeft;
-            @EquipRight.started -= instance.OnEquipRight;
-            @EquipRight.performed -= instance.OnEquipRight;
-            @EquipRight.canceled -= instance.OnEquipRight;
+            @Equip.started -= instance.OnEquip;
+            @Equip.performed -= instance.OnEquip;
+            @Equip.canceled -= instance.OnEquip;
         }
 
         public void RemoveCallbacks(IMenuControlsActions instance)
@@ -1605,8 +1565,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnLoadTest(InputAction.CallbackContext context);
         void OnCursorControl(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
-        void OnEquipLeft(InputAction.CallbackContext context);
-        void OnEquipRight(InputAction.CallbackContext context);
+        void OnEquip(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

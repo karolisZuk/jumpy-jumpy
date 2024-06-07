@@ -6,10 +6,9 @@ public class Equiptable : InventoryItem, IEquiptable {
     [SerializeField] private GameObject prefab;
 
     protected Animator animator;
-    protected EquipmentSlot equipmentSlot;
     protected GameObject spawnedPrefab;
 
-    public virtual void Equip(GameObject targetPoint, Quaternion initialRotation, Animator anim, EquipmentSlot slot) {
+    public virtual GameObject Equip(GameObject targetPoint, Quaternion initialRotation, Animator anim, EquipmentSlot slot) {
         // Set variables
         animator = anim;
         equipmentSlot = slot;
@@ -18,6 +17,8 @@ public class Equiptable : InventoryItem, IEquiptable {
         spawnedPrefab = Instantiate(prefab, targetPoint.transform.position, initialRotation);
         spawnedPrefab.transform.localScale = Vector3.one;
         spawnedPrefab.transform.SetParent(targetPoint.transform);
+
+        return spawnedPrefab;
     }
 
     public void Unequip() {
@@ -27,6 +28,6 @@ public class Equiptable : InventoryItem, IEquiptable {
 }
 
 public interface IEquiptable {
-    public abstract void Equip(GameObject targetPoint, Quaternion initialRotation, Animator anim, EquipmentSlot slot);
+    public abstract GameObject Equip(GameObject targetPoint, Quaternion initialRotation, Animator anim, EquipmentSlot slot);
     public abstract void Unequip();
 }

@@ -393,16 +393,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "EquipLeft",
-                    "type": "Button",
-                    "id": "707aa2f8-59b8-41c7-8262-af63108e483f",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "EquipRight",
+                    "name": "Equip",
                     "type": "Button",
                     "id": "c8a7ad3b-a4f6-4c37-b81b-77abed802d93",
                     "expectedControlType": "Button",
@@ -568,34 +559,12 @@
                 },
                 {
                     "name": "",
-                    "id": "677f1ff6-f4bf-47bb-b21a-24d9ee9d8895",
-                    "path": "<Gamepad>/leftTrigger",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "EquipLeft",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "b3c440e4-548d-42df-9bec-e728256ba837",
-                    "path": "<Keyboard>/q",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "EquipLeft",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "c8090a4a-0401-41b1-9822-f4de1b05fa60",
                     "path": "<Gamepad>/rightTrigger",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "EquipRight",
+                    "action": "Equip",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -606,7 +575,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "EquipRight",
+                    "action": "Equip",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

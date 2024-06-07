@@ -30,7 +30,8 @@ public class EquipmentController : MonoBehaviour {
     [SerializeField] private InventoryObject consumablesInventory;
     [SerializeField] private InventoryObject questItemsInventory;
 
-    List<GameObject> itemsDisplayed = new List<GameObject>();
+    private List<GameObject> itemsDisplayed = new List<GameObject>();
+    private List<GameObject> spawnedFieldItems = new List<GameObject>();
 
     [Header("Pickups")]
     [SerializeField] private LayerMask itemLayer;
@@ -49,6 +50,7 @@ public class EquipmentController : MonoBehaviour {
 
         PlayerMenu.OnMenuClose += OnHideMenu;
         InventoryItemCell.OnEquipItem += InventoryItemCell_OnEquipItem;
+        EquipmentCell.OnUnequipItem += InventoryItemCell_OnUnequipItem;
     }
 
     private void SaveTest_started(InputAction.CallbackContext obj) {
@@ -114,40 +116,104 @@ public class EquipmentController : MonoBehaviour {
     }
 
     private void CreateInventoryDisplay() {
-        for(int i = 0; i < equipmentInventory.Container.Count; i++) {
+        for (int i = 0; i < equipmentInventory.Container.Count; i++) {
+            EquipmentCell LCell = inventoryLeftHandSlot.GetComponent<EquipmentCell>();
+            EquipmentCell RCell = inventoryRightHandSlot.GetComponent<EquipmentCell>();
+
             InventoryItem item = equipmentInventory.Container[i].item;
             Sprite sprite = item.InventoryIcon();
-            GameObject obj = Instantiate(equipmentUICell, equipmentInventoryPanel.transform);
-            InventoryItemCell cell = obj.GetComponent<InventoryItemCell>();
 
-            obj.GetComponent<Image>().sprite = sprite;
-            obj.GetComponent<RectTransform>().localPosition = GetPosition(i, equipmentInventoryPanel.GetComponent<RectTransform>());
-            obj.GetComponentInChildren<TextMeshProUGUI>().text = equipmentInventory.Container[i].amount.ToString("n0");
-            cell.SetItem(item);
+            if (!this.IsItemEquipted(LCell, item) && !this.IsItemEquipted(RCell, item)) {
+                GameObject obj = Instantiate(equipmentUICell, equipmentInventoryPanel.transform);
+                InventoryItemCell cell = obj.GetComponent<InventoryItemCell>();
 
-            itemsDisplayed.Add(obj);
+                obj.GetComponent<Image>().sprite = sprite;
+                obj.GetComponent<RectTransform>().localPosition = GetPosition(i, equipmentInventoryPanel.GetComponent<RectTransform>());
+                obj.GetComponentInChildren<TextMeshProUGUI>().text = equipmentInventory.Container[i].amount.ToString("n0");
+                cell.SetItem(item);
+
+                itemsDisplayed.Add(obj);
+            }
         }
     }
 
-    private void InventoryItemCell_OnEquipItem(object sender, EquipActionTO e) {
-        GameObject slot = null;
-
-        if (e.slot == EquipmentSlot.LeftHand) {
-            slot = inventoryLeftHandSlot;
-        } else if (e.slot == EquipmentSlot.RightHand) {
-            slot = inventoryRightHandSlot;
+    private bool IsItemEquipted(IInventoryCell cell, InventoryItem item) {
+        if (cell.GetItem() == null) {
+            return false;
         }
 
-        if (slot == null) return;
+        return cell.GetItem().GetInstanceID() == item.GetInstanceID();
+    }
 
-        Image img = slot.GetComponent<Image>();
-        img.sprite = e.inventoryItem.InventoryIcon();
-        // TODO: Save previous color when item is unequipted
-        img.color = Color.white;
+    private void InventoryItemCell_OnUnequipItem(object sender, EquipActionTO e) {
 
-        // Remove equipted item from items displayed
+        // Destroy spawned gameobject
+        for (int i = spawnedFieldItems.Count - 1; i > -1; --i) {
+            Weapon weapon = spawnedFieldItems[i].GetComponent<Weapon>();
+
+            if (weapon != null && e.inventoryItem.equipmentSlot == weapon.GetSlot()) {
+                Destroy(spawnedFieldItems[i]);
+                spawnedFieldItems.RemoveAt(i);
+            }
+        }
+
+        // Remove icon from body slot
+        List<GameObject> resetSlots = GetAffectedSlots(e.inventoryItem.equipmentSlot);
+
+        foreach (GameObject slot in resetSlots) {
+            EquipmentCell cell = slot.GetComponent<EquipmentCell>();
+            cell.RemoveItem();
+        }
+
+        // Create new icon in items list
+        CreateInventoryDisplay();
+    }
+
+    private void InventoryItemCell_OnEquipItem(object sender, EquipActionTO e) {
+        List<GameObject> slots = GetAffectedSlots(e.inventoryItem.equipmentSlot);
+
+        SetEquiptedItemSlotIcons(slots, e);
+        RemoveItemIconFromItemsList(e);
+
+
+        if (e.inventoryItem is IEquiptable) {
+            SpawnEquiptedItem(e.inventoryItem, e.slot);
+        }
+    }
+
+    // Converts slot enum to slot gameobjects
+    private List<GameObject> GetAffectedSlots(EquipmentSlot slot) {
+        List<GameObject> slots = new List<GameObject>();
+
+        if (slot == EquipmentSlot.LeftHand) {
+            slots.Add(inventoryLeftHandSlot);
+        } else if (slot == EquipmentSlot.RightHand) {
+            slots.Add(inventoryRightHandSlot);
+        } else if (slot == EquipmentSlot.BothHands) {
+            slots.Add(inventoryRightHandSlot);
+            slots.Add(inventoryLeftHandSlot);
+        }
+
+        return slots;
+    }
+
+    private void SetEquiptedItemSlotIcons(List<GameObject> slots, EquipActionTO e) {
+        foreach(GameObject slot in slots) {
+            Image img = slot.GetComponent<Image>();
+            img.sprite = e.inventoryItem.InventoryIcon();
+            // TODO: Save previous color when item is unequipted
+            img.color = Color.white;
+
+            IInventoryCell cell = slot.GetComponent<IInventoryCell>();
+
+            cell.SetItem(e.inventoryItem);
+        }
+    }
+
+    private void RemoveItemIconFromItemsList(EquipActionTO e) {
         GameObject toRemove = null;
-        foreach(GameObject item in itemsDisplayed) {
+
+        foreach (GameObject item in itemsDisplayed) {
             InventoryItemCell cell = item.GetComponent<InventoryItemCell>();
 
             if (cell.GetItem().GetInstanceID() == e.inventoryItem.GetInstanceID()) {
@@ -158,11 +224,13 @@ public class EquipmentController : MonoBehaviour {
 
         itemsDisplayed.Remove(toRemove);
         Destroy(toRemove);
+    }
 
-        if (e.inventoryItem is IEquiptable) {
-            GameObject s = e.slot == EquipmentSlot.LeftHand ? equipmentPointLeft : equipmentPointRight;
-            (e.inventoryItem as IEquiptable).Equip(s, transform.rotation, animator, e.slot);
-        }
+    private void SpawnEquiptedItem(InventoryItem item, EquipmentSlot slot) {
+        GameObject s = slot == EquipmentSlot.LeftHand ? equipmentPointLeft : equipmentPointRight;
+        GameObject spawnedFieldItem = (item as IEquiptable).Equip(s, transform.rotation, animator, slot);
+
+        spawnedFieldItems.Add(spawnedFieldItem);
     }
 
     private Vector3 GetPosition(int i, RectTransform parent) {
@@ -189,5 +257,5 @@ public class EquipmentController : MonoBehaviour {
 }
 
 public enum EquipmentSlot {
-    LeftHand, RightHand
+    LeftHand, RightHand, BothHands
 }

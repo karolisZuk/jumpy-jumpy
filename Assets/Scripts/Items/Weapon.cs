@@ -36,6 +36,10 @@ public class Weapon : MonoBehaviour, IUsable {
         }
     }
 
+    public EquipmentSlot GetSlot() {
+        return slot;
+    }
+
     public void Use(InputAction.CallbackContext obj) {
         if (isBusy) return;
 

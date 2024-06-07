@@ -6,6 +6,7 @@ public class InventoryItem : ScriptableObject {
     [SerializeField] public string label;
     [SerializeField] public bool isStackable;
     [TextArea(15, 20)] public string description;
+    [SerializeField] public EquipmentSlot equipmentSlot;
     [SerializeField] private Sprite inventoryIcon;
     [SerializeField] private InventoryItemType type;
 

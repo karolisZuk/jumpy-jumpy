@@ -8,13 +8,19 @@ public class ResurrectionPlane : MonoBehaviour {
     }
 
     private void OnTriggerEnter(Collider other) {
-        if(other != null && other.CompareTag("Player")) {
+        if(other != null && (other.CompareTag("Player") || other.CompareTag("Respawnable"))) {
             Transform t = other.GetComponent<Transform>();
-            CharacterController cc = other.GetComponent<CharacterController>();
 
-            cc.enabled = false;
-            t.position = new Vector3(0, 1f, 0);
-            cc.enabled = true;
+            if (other.CompareTag("Player")) {
+                CharacterController cc = other.GetComponent<CharacterController>();
+                cc.enabled = false;
+                t.position = new Vector3(0, 1f, 0);
+                cc.enabled = true;
+            } else {
+                t.position = new Vector3(0, 1f, 0);
+
+            }
+
         }
     }
 }

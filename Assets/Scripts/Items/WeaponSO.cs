@@ -10,14 +10,16 @@ public class WeaponSO : Equiptable {
     [SerializeField] protected bool canPush;
     [SerializeField] private float cooldown;
 
-    public override void Equip(GameObject targetPoint, Quaternion initialRotation, Animator anim, EquipmentSlot slot) {
-        base.Equip(targetPoint, initialRotation, anim, slot);
+    public override GameObject Equip(GameObject targetPoint, Quaternion initialRotation, Animator anim, EquipmentSlot slot) {
+        GameObject go = base.Equip(targetPoint, initialRotation, anim, slot);
 
-        Weapon spawnedWeapon = spawnedPrefab.GetComponent<Weapon>();
+        Weapon spawnedWeapon = go.GetComponent<Weapon>();
 
         if (spawnedWeapon != null) {
             spawnedWeapon.Init(anim, animationName, damage, canPush, cooldown, equipmentSlot);
         }
+
+        return go;
     }
 }
 
