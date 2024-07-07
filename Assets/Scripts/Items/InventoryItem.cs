@@ -9,6 +9,7 @@ public class InventoryItem : ScriptableObject {
     [SerializeField] public EquipmentSlot equipmentSlot;
     [SerializeField] private Sprite inventoryIcon;
     [SerializeField] private InventoryItemType type;
+    [SerializeField] public SpawnPoint spawnPoint;
 
     public InventoryItemType Type() {
         return type;
@@ -23,4 +24,10 @@ public enum InventoryItemType {
     Equipment,
     Consumable,
     Quest
+}
+
+public enum SpawnPoint {
+    LeftArm,
+    RightArm,
+    Head
 }

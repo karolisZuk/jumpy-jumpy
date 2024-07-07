@@ -5157,6 +5157,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a6ed49f679ba74e44af1efbd18012ab5, type: 3}
+--- !u!1 &1241637241 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2072332135215851105, guid: 1f3cc52ee737d43f0a5af591eabf1d72,
+    type: 3}
+  m_PrefabInstance: {fileID: 311430552340121137}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1274536163
 GameObject:
   m_ObjectHideFlags: 0
@@ -5650,6 +5656,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5158636678854452786, guid: 51c504d4a6a2442bdbfc15af5848cb02,
     type: 3}
   m_PrefabInstance: {fileID: 1367647949}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1377785500 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1076138515326793455, guid: 1f3cc52ee737d43f0a5af591eabf1d72,
+    type: 3}
+  m_PrefabInstance: {fileID: 311430552340121137}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1387332907
 PrefabInstance:
@@ -7892,9 +7904,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3138589315882943035, guid: 1f3cc52ee737d43f0a5af591eabf1d72,
         type: 3}
+      propertyPath: leftArm
+      value: 
+      objectReference: {fileID: 1377785500}
+    - target: {fileID: 3138589315882943035, guid: 1f3cc52ee737d43f0a5af591eabf1d72,
+        type: 3}
       propertyPath: animator
       value: 
       objectReference: {fileID: 1420753562}
+    - target: {fileID: 3138589315882943035, guid: 1f3cc52ee737d43f0a5af591eabf1d72,
+        type: 3}
+      propertyPath: rightArm
+      value: 
+      objectReference: {fileID: 1241637241}
     - target: {fileID: 3138589315882943035, guid: 1f3cc52ee737d43f0a5af591eabf1d72,
         type: 3}
       propertyPath: weaponSlot

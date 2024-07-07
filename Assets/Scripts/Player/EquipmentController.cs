@@ -12,8 +12,8 @@ public class EquipmentController : MonoBehaviour {
     [SerializeField] private Animator animator;
 
     [Header("Equipment points")]
-    [SerializeField] private GameObject equipmentPointLeft;
-    [SerializeField] private GameObject equipmentPointRight;
+    [SerializeField] private GameObject leftArm;
+    [SerializeField] private GameObject rightArm;
 
     [Header("Inventory UI")]
     [SerializeField] private bool clearOnQuit = true;
@@ -115,23 +115,34 @@ public class EquipmentController : MonoBehaviour {
     }
 
     private void CreateInventoryDisplay() {
+        itemsDisplayed.Clear();
+
         for (int i = 0; i < equipmentInventory.Container.Count; i++) {
             EquipmentCell weaponSlotCell = weaponSlot.GetComponent<EquipmentCell>();
-
             InventoryItem item = equipmentInventory.Container[i].item;
             Sprite sprite = item.InventoryIcon();
 
-            if (!this.IsItemEquipted(weaponSlotCell, item)) {
-                GameObject obj = Instantiate(equipmentUICell, equipmentInventoryPanel.transform);
-                InventoryItemCell cell = obj.GetComponent<InventoryItemCell>();
-
-                obj.GetComponent<Image>().sprite = sprite;
-                obj.GetComponent<RectTransform>().localPosition = GetPosition(i, equipmentInventoryPanel.GetComponent<RectTransform>());
-                obj.GetComponentInChildren<TextMeshProUGUI>().text = equipmentInventory.Container[i].amount.ToString("n0");
-                cell.SetItem(item);
-
-                itemsDisplayed.Add(obj);
+            if (IsItemDisplayedInGrid(item)) {
+                // Skip if item is equipted, or is already displayed;
+                continue;
             }
+
+            // Render item cell
+            GameObject obj = Instantiate(equipmentUICell, equipmentInventoryPanel.transform);
+            InventoryItemCell cell = obj.GetComponent<InventoryItemCell>();
+
+            obj.GetComponent<Image>().sprite = sprite;
+            obj.GetComponent<RectTransform>().localPosition = GetPosition(i, equipmentInventoryPanel.GetComponent<RectTransform>());
+
+            if (IsItemEquipted(weaponSlotCell, item)) {
+                obj.GetComponentInChildren<TextMeshProUGUI>().text = "E";
+            } else {
+                obj.GetComponentInChildren<TextMeshProUGUI>().text = equipmentInventory.Container[i].amount.ToString("n0"); ;
+            }
+
+            cell.SetItem(item);
+
+            itemsDisplayed.Add(obj);
         }
     }
 
@@ -143,7 +154,23 @@ public class EquipmentController : MonoBehaviour {
         return cell.GetItem().GetInstanceID() == item.GetInstanceID();
     }
 
+    private bool IsItemDisplayedInGrid(InventoryItem item) {
+        bool res = false;
+
+        foreach (GameObject gridCell in itemsDisplayed) {
+            InventoryItemCell cell = gridCell.GetComponent<InventoryItemCell>();
+
+            if (cell.GetItem().name == item.name) {
+                res = true;
+                break;
+            }
+        }
+
+        return res;
+    }
+
     private void InventoryItemCell_OnUnequipItem(object sender, EquipActionTO e) {
+        Debug.Log("TODO: Do not allow unequip from main weapon slot");
         // Destroy spawned gameobject
         for (int i = spawnedFieldItems.Count - 1; i > -1; --i) {
             Weapon weapon = spawnedFieldItems[i].GetComponent<Weapon>();
@@ -155,64 +182,55 @@ public class EquipmentController : MonoBehaviour {
         }
 
         // Remove icon from body slot
-        List<GameObject> resetSlots = GetAffectedSlots(e.inventoryItem.equipmentSlot);
+        GameObject resetSlot = GetAffectedSlot(e.inventoryItem.equipmentSlot);
 
-        foreach (GameObject slot in resetSlots) {
-            EquipmentCell cell = slot.GetComponent<EquipmentCell>();
+        if (resetSlot != null) {
+            EquipmentCell cell = resetSlot.GetComponent<EquipmentCell>();
             cell.RemoveItem();
         }
 
-        // Create new icon in items list
         CreateInventoryDisplay();
     }
 
     private void InventoryItemCell_OnEquipItem(object sender, EquipActionTO e) {
-        List<GameObject> slots = GetAffectedSlots(e.inventoryItem.equipmentSlot);
-
-        SetEquiptedItemSlotIcons(slots, e);
-        RemoveItemIconFromItemsList(e);
-
+        GameObject slot = GetAffectedSlot(e.inventoryItem.equipmentSlot);
+  
+        //RemoveItemIconFromItemsList(e);
+        SetEquiptedItemSlotIcons(slot, e);
+        CreateInventoryDisplay();
 
         if (e.inventoryItem is IEquiptable) {
             SpawnEquiptedItem(e.inventoryItem, e.slot);
         }
     }
 
-    // Converts slot enum to slot gameobjects
-    private List<GameObject> GetAffectedSlots(EquipmentSlot slot) {
-        List<GameObject> slots = new List<GameObject>();
-
-        if (slot == EquipmentSlot.Weapon) {
-            slots.Add(weaponSlot);
-        }
-
+    // Converts slot enum to slot gameobject
+    private GameObject GetAffectedSlot(EquipmentSlot slot) {
         // TODO: Add other slots
 
-        return slots;
-    }
-
-    private void SetEquiptedItemSlotIcons(List<GameObject> slots, EquipActionTO e) {
-        RemoveItemIconFromItemsList(e);
-
-        foreach (GameObject slot in slots) {
-            EquipmentCell cell = slot.GetComponent<EquipmentCell>();
-
-            // Cell is not empty
-            if (cell.GetItem() != null) {
-                InventoryItem item = cell.GetItem();
-
-                InventoryItemCell_OnUnequipItem(this, new EquipActionTO(item, e.slot));
-                cell.RemoveItem();
-            }
-
-            Image img = slot.GetComponent<Image>();
-            img.sprite = e.inventoryItem.InventoryIcon();
-            img.color = Color.white;
-
-            cell.SetItem(e.inventoryItem);
+        if (slot == EquipmentSlot.Weapon) {
+            return weaponSlot;
         }
 
-        CreateInventoryDisplay();
+        return null;
+    }
+
+    private void SetEquiptedItemSlotIcons(GameObject slot, EquipActionTO e) {
+        EquipmentCell cell = slot.GetComponent<EquipmentCell>();
+
+        // Cell is not empty
+        if (cell.GetItem() != null) {
+            InventoryItem item = cell.GetItem();
+
+            InventoryItemCell_OnUnequipItem(this, new EquipActionTO(item, e.slot));
+            cell.RemoveItem();
+        }
+
+        Image img = slot.GetComponent<Image>();
+        img.sprite = e.inventoryItem.InventoryIcon();
+        img.color = Color.white;
+
+        cell.SetItem(e.inventoryItem);
     }
 
     private void RemoveItemIconFromItemsList(EquipActionTO e) {
@@ -221,21 +239,32 @@ public class EquipmentController : MonoBehaviour {
         foreach (GameObject item in itemsDisplayed) {
             InventoryItemCell cell = item.GetComponent<InventoryItemCell>();
 
-            if (cell.GetItem().GetInstanceID() == e.inventoryItem.GetInstanceID()) {
+            if (cell.GetItem().name == e.inventoryItem.name) {
                 toRemove = item;
                 break;
             }
         }
 
-        itemsDisplayed.Remove(toRemove);
-        Destroy(toRemove);
+        if (toRemove != null) {
+            itemsDisplayed.Remove(toRemove);
+            Destroy(toRemove);
+        }
     }
 
     private void SpawnEquiptedItem(InventoryItem item, EquipmentSlot slot) {
-        GameObject s = slot == EquipmentSlot.LeftHand ? equipmentPointLeft : equipmentPointRight;
-        GameObject spawnedFieldItem = (item as IEquiptable).Equip(s, transform.rotation, animator, slot);
+        GameObject s = null;
 
-        spawnedFieldItems.Add(spawnedFieldItem);
+        if (item.spawnPoint == SpawnPoint.RightArm) {
+            s = rightArm;
+        } else if (item.spawnPoint == SpawnPoint.LeftArm) {
+            s = leftArm;
+        }
+
+        if (s != null) {
+            GameObject spawnedFieldItem = (item as IEquiptable).Equip(s, transform.rotation, animator, slot);
+
+            spawnedFieldItems.Add(spawnedFieldItem);
+        }
     }
 
     private Vector3 GetPosition(int i, RectTransform parent) {
@@ -262,5 +291,5 @@ public class EquipmentController : MonoBehaviour {
 }
 
 public enum EquipmentSlot {
-    LeftHand, RightHand, BothHands, Weapon
+    Weapon
 }

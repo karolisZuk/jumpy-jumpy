@@ -61,4 +61,8 @@ public struct EquipActionTO {
         this.inventoryItem = inventoryItem;
         this.slot = slot;
     }
+
+    public override string ToString() {
+        return "InventoryItem: " + inventoryItem.name + " Slot: " + slot;
+    }
 }
