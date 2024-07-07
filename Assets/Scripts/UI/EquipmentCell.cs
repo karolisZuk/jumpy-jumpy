@@ -6,7 +6,6 @@ using UnityEngine.UI;
 using TMPro;
 
 public class EquipmentCell : MonoBehaviour, IInventoryCell, IPointerEnterHandler, IPointerExitHandler {
-    // TODO: Store default image and change back to it when item is removed
     public static event EventHandler<EquipActionTO> OnUnequipItem;
     public InventoryItem cellItem;
 

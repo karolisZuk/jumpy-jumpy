@@ -22,8 +22,7 @@ public class EquipmentController : MonoBehaviour {
     [SerializeField] private int NUMBER_OF_COLUMNS;
     [SerializeField] private GameObject equipmentUICell;
     [SerializeField] private GameObject equipmentInventoryPanel;
-    [SerializeField] private GameObject inventoryLeftHandSlot;
-    [SerializeField] private GameObject inventoryRightHandSlot;
+    [SerializeField] private GameObject weaponSlot;
 
     [Header("Inventories")]
     [SerializeField] private InventoryObject equipmentInventory;
@@ -117,13 +116,12 @@ public class EquipmentController : MonoBehaviour {
 
     private void CreateInventoryDisplay() {
         for (int i = 0; i < equipmentInventory.Container.Count; i++) {
-            EquipmentCell LCell = inventoryLeftHandSlot.GetComponent<EquipmentCell>();
-            EquipmentCell RCell = inventoryRightHandSlot.GetComponent<EquipmentCell>();
+            EquipmentCell weaponSlotCell = weaponSlot.GetComponent<EquipmentCell>();
 
             InventoryItem item = equipmentInventory.Container[i].item;
             Sprite sprite = item.InventoryIcon();
 
-            if (!this.IsItemEquipted(LCell, item) && !this.IsItemEquipted(RCell, item)) {
+            if (!this.IsItemEquipted(weaponSlotCell, item)) {
                 GameObject obj = Instantiate(equipmentUICell, equipmentInventoryPanel.transform);
                 InventoryItemCell cell = obj.GetComponent<InventoryItemCell>();
 
@@ -184,14 +182,11 @@ public class EquipmentController : MonoBehaviour {
     private List<GameObject> GetAffectedSlots(EquipmentSlot slot) {
         List<GameObject> slots = new List<GameObject>();
 
-        if (slot == EquipmentSlot.LeftHand) {
-            slots.Add(inventoryLeftHandSlot);
-        } else if (slot == EquipmentSlot.RightHand) {
-            slots.Add(inventoryRightHandSlot);
-        } else if (slot == EquipmentSlot.BothHands) {
-            slots.Add(inventoryRightHandSlot);
-            slots.Add(inventoryLeftHandSlot);
+        if (slot == EquipmentSlot.Weapon) {
+            slots.Add(weaponSlot);
         }
+
+        // TODO: Add other slots
 
         return slots;
     }
@@ -267,5 +262,5 @@ public class EquipmentController : MonoBehaviour {
 }
 
 public enum EquipmentSlot {
-    LeftHand, RightHand, BothHands
+    LeftHand, RightHand, BothHands, Weapon
 }

@@ -42,16 +42,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "UseL",
-                    "type": "Button",
-                    "id": "e7331f97-6cb0-470f-b518-7d8fcac2285e",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "UseR",
+                    "name": "UseWeapon",
                     "type": "Button",
                     "id": "23805bb9-1529-468a-92f6-9021475eb913",
                     "expectedControlType": "Button",
@@ -264,7 +255,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "UseR",
+                    "action": "UseWeapon",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -275,29 +266,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "UseR",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "4f7e51aa-6a44-4c27-addf-72b163c6f9ba",
-                    "path": "<Gamepad>/leftTrigger",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "UseL",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "38604947-894d-4f94-985e-564e1fa3fc78",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "UseL",
+                    "action": "UseWeapon",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

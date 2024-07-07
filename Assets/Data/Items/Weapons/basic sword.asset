@@ -15,7 +15,7 @@ MonoBehaviour:
   label: Simple Sword
   isStackable: 0
   description: A basic sword, for a basic person.
-  equipmentSlot: 1
+  equipmentSlot: 3
   inventoryIcon: {fileID: 21300000, guid: fe8fc90e95a1a477c92f6c621b2e85ab, type: 3}
   type: 0
   prefab: {fileID: 5535313429754664582, guid: 8ebe41e8e3cb5437596639a0c7cd73ae, type: 3}

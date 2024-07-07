@@ -64,16 +64,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""UseL"",
-                    ""type"": ""Button"",
-                    ""id"": ""e7331f97-6cb0-470f-b518-7d8fcac2285e"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""UseR"",
+                    ""name"": ""UseWeapon"",
                     ""type"": ""Button"",
                     ""id"": ""23805bb9-1529-468a-92f6-9021475eb913"",
                     ""expectedControlType"": ""Button"",
@@ -286,7 +277,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""UseR"",
+                    ""action"": ""UseWeapon"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -297,29 +288,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""UseR"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""4f7e51aa-6a44-4c27-addf-72b163c6f9ba"",
-                    ""path"": ""<Gamepad>/leftTrigger"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""UseL"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""38604947-894d-4f94-985e-564e1fa3fc78"",
-                    ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""UseL"",
+                    ""action"": ""UseWeapon"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -1150,8 +1119,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_CharacterControls_Run = m_CharacterControls.FindAction("Run", throwIfNotFound: true);
         m_CharacterControls_Jump = m_CharacterControls.FindAction("Jump", throwIfNotFound: true);
         m_CharacterControls_Dodge = m_CharacterControls.FindAction("Dodge", throwIfNotFound: true);
-        m_CharacterControls_UseL = m_CharacterControls.FindAction("UseL", throwIfNotFound: true);
-        m_CharacterControls_UseR = m_CharacterControls.FindAction("UseR", throwIfNotFound: true);
+        m_CharacterControls_UseWeapon = m_CharacterControls.FindAction("UseWeapon", throwIfNotFound: true);
         m_CharacterControls_ShowMenu = m_CharacterControls.FindAction("ShowMenu", throwIfNotFound: true);
         // MenuControls
         m_MenuControls = asset.FindActionMap("MenuControls", throwIfNotFound: true);
@@ -1240,8 +1208,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_CharacterControls_Run;
     private readonly InputAction m_CharacterControls_Jump;
     private readonly InputAction m_CharacterControls_Dodge;
-    private readonly InputAction m_CharacterControls_UseL;
-    private readonly InputAction m_CharacterControls_UseR;
+    private readonly InputAction m_CharacterControls_UseWeapon;
     private readonly InputAction m_CharacterControls_ShowMenu;
     public struct CharacterControlsActions
     {
@@ -1251,8 +1218,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @Run => m_Wrapper.m_CharacterControls_Run;
         public InputAction @Jump => m_Wrapper.m_CharacterControls_Jump;
         public InputAction @Dodge => m_Wrapper.m_CharacterControls_Dodge;
-        public InputAction @UseL => m_Wrapper.m_CharacterControls_UseL;
-        public InputAction @UseR => m_Wrapper.m_CharacterControls_UseR;
+        public InputAction @UseWeapon => m_Wrapper.m_CharacterControls_UseWeapon;
         public InputAction @ShowMenu => m_Wrapper.m_CharacterControls_ShowMenu;
         public InputActionMap Get() { return m_Wrapper.m_CharacterControls; }
         public void Enable() { Get().Enable(); }
@@ -1275,12 +1241,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Dodge.started += instance.OnDodge;
             @Dodge.performed += instance.OnDodge;
             @Dodge.canceled += instance.OnDodge;
-            @UseL.started += instance.OnUseL;
-            @UseL.performed += instance.OnUseL;
-            @UseL.canceled += instance.OnUseL;
-            @UseR.started += instance.OnUseR;
-            @UseR.performed += instance.OnUseR;
-            @UseR.canceled += instance.OnUseR;
+            @UseWeapon.started += instance.OnUseWeapon;
+            @UseWeapon.performed += instance.OnUseWeapon;
+            @UseWeapon.canceled += instance.OnUseWeapon;
             @ShowMenu.started += instance.OnShowMenu;
             @ShowMenu.performed += instance.OnShowMenu;
             @ShowMenu.canceled += instance.OnShowMenu;
@@ -1300,12 +1263,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Dodge.started -= instance.OnDodge;
             @Dodge.performed -= instance.OnDodge;
             @Dodge.canceled -= instance.OnDodge;
-            @UseL.started -= instance.OnUseL;
-            @UseL.performed -= instance.OnUseL;
-            @UseL.canceled -= instance.OnUseL;
-            @UseR.started -= instance.OnUseR;
-            @UseR.performed -= instance.OnUseR;
-            @UseR.canceled -= instance.OnUseR;
+            @UseWeapon.started -= instance.OnUseWeapon;
+            @UseWeapon.performed -= instance.OnUseWeapon;
+            @UseWeapon.canceled -= instance.OnUseWeapon;
             @ShowMenu.started -= instance.OnShowMenu;
             @ShowMenu.performed -= instance.OnShowMenu;
             @ShowMenu.canceled -= instance.OnShowMenu;
@@ -1552,8 +1512,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnRun(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnDodge(InputAction.CallbackContext context);
-        void OnUseL(InputAction.CallbackContext context);
-        void OnUseR(InputAction.CallbackContext context);
+        void OnUseWeapon(InputAction.CallbackContext context);
         void OnShowMenu(InputAction.CallbackContext context);
     }
     public interface IMenuControlsActions

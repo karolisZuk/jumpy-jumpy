@@ -80,22 +80,14 @@ public class PlayerInputs : MonoBehaviour {
     }
 
     public void AssignEquipmentControls(EquipmentSlot slot, IUsable equipment) {
-        if (slot == EquipmentSlot.LeftHand) {
-            playerInputActions.CharacterControls.UseL.started += equipment.Use;
-        }
-
-        if (slot == EquipmentSlot.RightHand) {
-            playerInputActions.CharacterControls.UseR.started += equipment.Use;
+        if (slot == EquipmentSlot.Weapon) {
+            playerInputActions.CharacterControls.UseWeapon.started += equipment.Use;
         }
     }
 
     public void ClearEquipmentControls(EquipmentSlot slot, IUsable equipment) {
-        if (slot == EquipmentSlot.LeftHand) {
-            playerInputActions.CharacterControls.UseL.started -= equipment.Use;
-        }
-
-        if (slot == EquipmentSlot.RightHand) {
-            playerInputActions.CharacterControls.UseR.started -= equipment.Use;
+        if (slot == EquipmentSlot.Weapon) {
+            playerInputActions.CharacterControls.UseWeapon.started -= equipment.Use;
         }
     }
 
