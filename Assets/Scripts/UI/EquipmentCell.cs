@@ -11,6 +11,7 @@ public class EquipmentCell : MonoBehaviour, IInventoryCell, IPointerEnterHandler
 
     protected PlayerInputActions controls;
 
+    [SerializeField] private bool isInteractable = true;
     private bool isHoveredOver = false;
     private Color startingColor;
     private Sprite startingImage;
@@ -32,6 +33,8 @@ public class EquipmentCell : MonoBehaviour, IInventoryCell, IPointerEnterHandler
 
 
     protected void Unequip_performed(InputAction.CallbackContext obj) {
+        if (!isInteractable) return;
+
         if (isHoveredOver) {
 
             if (cellItem != null) {

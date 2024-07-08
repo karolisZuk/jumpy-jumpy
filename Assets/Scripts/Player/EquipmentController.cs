@@ -137,7 +137,7 @@ public class EquipmentController : MonoBehaviour {
             if (IsItemEquipted(weaponSlotCell, item)) {
                 obj.GetComponentInChildren<TextMeshProUGUI>().text = "E";
             } else {
-                obj.GetComponentInChildren<TextMeshProUGUI>().text = equipmentInventory.Container[i].amount.ToString("n0"); ;
+                obj.GetComponentInChildren<TextMeshProUGUI>().text = "";
             }
 
             cell.SetItem(item);

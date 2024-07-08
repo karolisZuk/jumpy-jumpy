@@ -6279,6 +6279,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cellItem: {fileID: 0}
+  isInteractable: 0
 --- !u!1001 &1737710569
 PrefabInstance:
   m_ObjectHideFlags: 0
