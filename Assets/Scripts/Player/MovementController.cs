@@ -17,6 +17,7 @@ public class MovementController : MonoBehaviour {
     Vector2 lastDirectionInput;
 
     #region Walking and Running Variables
+
     bool isMovementPressed;
     bool isRunPressed;
 
@@ -33,22 +34,28 @@ public class MovementController : MonoBehaviour {
     private Vector2 currentVectorInput;
     private Vector2 smoothInputVelocity;
     private Rigidbody rb;
+
     #endregion
 
     #region Animation Hashes
+
     int isWalkingHash;
     int isRunningHash;
+
     #endregion
 
-    #region Gravity
+    #region Gravity variables
+
     float gravity = -9f;
     float groundedGravity = -0.5f;
 
     [Header("Gravity")]
     [Range(1f, 10)] public float fallMultiplier = 2f;
+
     #endregion
 
     #region Jumping Variables
+
     bool isJumpPressed = false;
     float initialJumpVelocity;
 
@@ -61,11 +68,14 @@ public class MovementController : MonoBehaviour {
     int isLandingHash;
     bool isJumpAnimating = false;
     bool isLandingAnimating = false;
+
     #endregion
 
-    #region Dodge
+    #region Dodge variables
+
     bool isDodgePressed = false;
     bool isDodging = false;
+
     #endregion
 
     private void Awake() {
@@ -143,6 +153,8 @@ public class MovementController : MonoBehaviour {
         }
     }
 
+    #region Force mode
+
     private void EnableForceMode() {
         isForceModeEnabled = true;
         rb.isKinematic = false;
@@ -159,13 +171,17 @@ public class MovementController : MonoBehaviour {
         forceCollider.enabled = false;
     }
 
+    #endregion
+
+    #region Dodge
+
     void HandleDodge() {
         if (lastDirectionInput.sqrMagnitude < 0.5f) {
             return;
         }
 
         if (characterController.isGrounded && !isDodging && !isJumping && isDodgePressed) {
-            // TODO: Shrink hit collider when dodging
+            // TODO: Make unhitable for split second when dodging
             EnableForceMode();
             animator.SetTrigger("Dodge");
             isDodging = true;
@@ -184,14 +200,18 @@ public class MovementController : MonoBehaviour {
         DisableForceMode();
     }
 
+    void OnDodge(InputAction.CallbackContext ctx) {
+        isDodgePressed = ctx.ReadValueAsButton();
+    }
+
+    #endregion
+
+    #region Jump
+
     void SetupJumpVariables() {
         float timeToApex = maxJumpTime / 2;
         gravity = (-2 * maxJumpHeight) / Mathf.Pow(timeToApex, 2);
         initialJumpVelocity = (2 * maxJumpHeight) / timeToApex;
-    }
-
-    void OnDodge(InputAction.CallbackContext ctx) {
-        isDodgePressed = ctx.ReadValueAsButton();
     }
 
     void OnJump(InputAction.CallbackContext ctx) {
@@ -225,6 +245,8 @@ public class MovementController : MonoBehaviour {
         go.SetActive(true);
         go.transform.position = new Vector3(transform.position.x, 0.49f, transform.position.z);
     }
+
+    #endregion
 
     void HandleGravity() {
         bool isFalling = currentMovement.y <= 0f || !isJumpPressed;
