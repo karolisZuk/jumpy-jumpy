@@ -80,8 +80,6 @@ public class Enemy : MonoBehaviour, IDamagable, IEnemyMovable, ITriggerCheckable
 
     public void MoveEnemy(Vector3 velocity) {
         RB.velocity = velocity;
-
-        CheckRotation(velocity);
     }
 
     public void CheckRotation(Vector3 velocity) {

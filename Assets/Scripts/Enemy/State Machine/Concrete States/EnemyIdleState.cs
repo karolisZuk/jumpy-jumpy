@@ -34,6 +34,7 @@ public class EnemyIdleState : EnemyState {
         direction = (targetPos - enemy.transform.position).normalized;
 
         enemy.MoveEnemy(direction * enemy.RandomMovementSpeed);
+        enemy.CheckRotation(direction * enemy.RandomMovementSpeed);
 
         if (Vector3.Distance(enemy.transform.position, targetPos) < 2f) {
             targetPos = GetRandomPointInCircle();

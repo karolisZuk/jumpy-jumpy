@@ -7,6 +7,8 @@ public class EnemyAttackState : EnemyState {
     private float timer;
     private float timeBetweenShots = 1f;
     private float bulletSpeed = 15f;
+    private float shotFacingAngle = 45f;
+    private float attackRotationSpeed = 10f;
 
     private float exitTimer;
     private float timeTillExit = 3f;
@@ -32,16 +34,23 @@ public class EnemyAttackState : EnemyState {
         base.FrameUpdate();
 
         enemy.MoveEnemy(Vector3.zero);
-        enemy.CheckRotation(playerTransform.position);
+        enemy.CheckRotation(playerTransform.position * attackRotationSpeed);
 
         if (timer > timeBetweenShots) {
             timer = 0f;
 
-            Vector3 dir = (playerTransform.position - enemy.transform.position).normalized;
+            // Only shoot if facing player
+            if (Vector3.Angle(enemy.transform.forward, playerTransform.position - enemy.transform.position) < shotFacingAngle) {
 
-            Rigidbody bullet = GameObject.Instantiate(enemy.bulletPrefab, enemy.transform.position, Quaternion.identity);
+                Vector3 dir = (playerTransform.position - enemy.transform.position).normalized;
+                dir.y += 0.15f;
 
-            bullet.velocity = dir * bulletSpeed;
+                Rigidbody bullet = GameObject.Instantiate(enemy.bulletPrefab, enemy.transform.position, Quaternion.identity);
+
+                bullet.velocity = dir * bulletSpeed;
+            } else {
+                enemy.CheckRotation(playerTransform.position * attackRotationSpeed);
+            }
         }
 
         if (Vector3.Distance(playerTransform.position, enemy.transform.position) > distanceToCountExit) {
