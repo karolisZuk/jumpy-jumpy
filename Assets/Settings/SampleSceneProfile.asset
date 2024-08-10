@@ -55,10 +55,10 @@ MonoBehaviour:
     m_Value: {x: 0.5, y: 0.5}
   intensity:
     m_OverrideState: 1
-    m_Value: 0.41
+    m_Value: 0.229
   smoothness:
     m_OverrideState: 1
-    m_Value: 0.4
+    m_Value: 0.739
   rounded:
     m_OverrideState: 0
     m_Value: 0
@@ -299,22 +299,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66f335fb1ffd8684294ad653bf1c7564, type: 3}
   m_Name: ColorAdjustments
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   postExposure:
     m_OverrideState: 1
-    m_Value: 0.08
+    m_Value: -0.31
   contrast:
     m_OverrideState: 1
-    m_Value: 34
+    m_Value: 24
   colorFilter:
     m_OverrideState: 0
     m_Value: {r: 1, g: 1, b: 1, a: 1}
   hueShift:
     m_OverrideState: 1
-    m_Value: -4
+    m_Value: 0
   saturation:
     m_OverrideState: 1
-    m_Value: 3
+    m_Value: -10
 --- !u!114 &-2295768755602880770
 MonoBehaviour:
   m_ObjectHideFlags: 3

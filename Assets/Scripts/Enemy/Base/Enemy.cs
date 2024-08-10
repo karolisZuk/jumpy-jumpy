@@ -7,7 +7,6 @@ public class Enemy : MonoBehaviour, IDamagable, IEnemyMovable, ITriggerCheckable
     [field: SerializeField] public float RotationFactorPerFrame { get; set; }
     public int CurrentHealth { get; set; }
     public Rigidbody RB { get; set; }
-    public Rigidbody bulletPrefab;
 
     #region State Machine variables
 
@@ -18,10 +17,15 @@ public class Enemy : MonoBehaviour, IDamagable, IEnemyMovable, ITriggerCheckable
 
     #endregion
 
-    #region Idle variables
+    #region ScriptableObject variables
 
-    public float RandomMovementRange = 5f;
-    public float RandomMovementSpeed = 1f;
+    [SerializeField] private EnemyIdleSOBase EnemyIdleBase;
+    [SerializeField] private EnemyChaseSOBase EnemyChaseBase;
+    [SerializeField] private EnemyAttackSOBase EnemyAttackBase;
+
+    public EnemyIdleSOBase EnemyIdleBaseInstance { get; set; }
+    public EnemyChaseSOBase EnemyChaseBaseInstance { get; set; }
+    public EnemyAttackSOBase EnemyAttackBaseInstance { get; set; }
 
     #endregion
 
@@ -36,6 +40,11 @@ public class Enemy : MonoBehaviour, IDamagable, IEnemyMovable, ITriggerCheckable
     private bool grounded;
 
     private void Awake() {
+        EnemyIdleBaseInstance = Instantiate(EnemyIdleBase);
+        EnemyChaseBaseInstance = Instantiate(EnemyChaseBase);
+        EnemyAttackBaseInstance = Instantiate(EnemyAttackBase);
+
+
         StateMachine = new EnemyStateMachine();
         IdleState = new EnemyIdleState(this, StateMachine);
         ChaseState = new EnemyChaseState(this, StateMachine);
@@ -45,6 +54,11 @@ public class Enemy : MonoBehaviour, IDamagable, IEnemyMovable, ITriggerCheckable
     private void Start() {
         CurrentHealth = MaxHealth;
         RB = GetComponent<Rigidbody>();
+
+        EnemyIdleBaseInstance.Initialize(gameObject, this);
+        EnemyChaseBaseInstance.Initialize(gameObject, this);
+        EnemyAttackBaseInstance.Initialize(gameObject, this);
+
         StateMachine.Initialize(IdleState);
         lastYposition = transform.position.y;
     }

@@ -45,7 +45,6 @@ public class Weapon : MonoBehaviour, IUsable {
 
         isBusy = true;
         Debug.Log("TODO: Using " + name);
-        // TODO: Mirror animatino based on hand
         // TODO: Enable and disable damage collider
         animator.SetTrigger(animationName);
     }

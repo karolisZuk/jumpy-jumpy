@@ -52,7 +52,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 7
+  m_Radius: 7.36
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &4382448219467549345
 MonoBehaviour:
@@ -188,8 +188,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <MaxHealth>k__BackingField: 100
   <RotationFactorPerFrame>k__BackingField: 10
-  RandomMovementRange: 5
-  RandomMovementSpeed: 2
+  EnemyIdleBase: {fileID: 11400000, guid: c3f1258b8a94d43b697d5a6b1f5c2f9e, type: 2}
+  EnemyChaseBase: {fileID: 11400000, guid: babdd6f3aa02f4788b10cf8a3fcf48e9, type: 2}
+  EnemyAttackBase: {fileID: 11400000, guid: c97c27d38043e4f8c9d5d257037b551a, type: 2}
 --- !u!1 &2870295066022797323
 GameObject:
   m_ObjectHideFlags: 0
@@ -275,7 +276,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 1.8
+  m_Radius: 3.01
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &3601163611508641758
 MonoBehaviour:

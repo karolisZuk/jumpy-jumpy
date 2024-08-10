@@ -11,9 +11,9 @@ public class MovementController : MonoBehaviour {
     [SerializeField] private GameObject landingParticles;
 
     Vector2 currentMovementInput;
-    Vector3 currentMovement;
+    public Vector3 currentMovement;
+    public Vector3 appliedMovement;
     Vector3 currentRunMovement;
-    Vector3 appliedMovement;
     Vector2 lastDirectionInput;
 
     #region Walking and Running Variables
@@ -46,7 +46,7 @@ public class MovementController : MonoBehaviour {
 
     #region Gravity variables
 
-    float gravity = -9f;
+    float gravity = -9.8f;
     float groundedGravity = -0.5f;
 
     [Header("Gravity")]
@@ -56,18 +56,18 @@ public class MovementController : MonoBehaviour {
 
     #region Jumping Variables
 
-    bool isJumpPressed = false;
-    float initialJumpVelocity;
-
     [Header("Jumping")]
     [Range(0.1f, 20)] public float maxJumpHeight = 0.5f;
     [Range(0.1f, 20)] public float maxJumpTime = 1.0f;
     [SerializeField] private LayerMask environment;
+
     bool isJumping = false;
     int isJumpingHash;
     int isLandingHash;
     bool isJumpAnimating = false;
     bool isLandingAnimating = false;
+    bool isJumpPressed = false;
+    float initialJumpVelocity;
 
     #endregion
 
@@ -346,5 +346,13 @@ public class MovementController : MonoBehaviour {
 
     private void OnDisable() {
         playerInputActions.CharacterControls.Disable();
+    }
+
+    public Vector3 CurrentMovement() {
+        return currentMovement;
+    }
+
+    public bool IsForceModeEnabled() {
+        return isForceModeEnabled;
     }
 }

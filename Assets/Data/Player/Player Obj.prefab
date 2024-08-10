@@ -262,14 +262,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1076138515326793455}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: -0, y: 0.00529, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7764800126700556299}
   m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &1082850550708753882
 GameObject:
   m_ObjectHideFlags: 0
@@ -1042,7 +1042,7 @@ Transform:
   - {fileID: 1719092030002687028}
   - {fileID: 6625625127287824248}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!143 &549569943167825155
 CharacterController:
@@ -1086,15 +1086,15 @@ MonoBehaviour:
   landingParticles: {fileID: 4514597317879345990, guid: 0f3d94cb11ecf47178adcee21dca610e,
     type: 3}
   walkMultiplier: 1.2
-  rotationFactorPerFrame: 30
-  runMultiplier: 4.5
-  dodgeMultiplier: 6.5
+  rotationFactorPerFrame: 40
+  runMultiplier: 5
+  dodgeMultiplier: 5.5
   smoothInputSpeed: 0.15
   alwaysRun: 1
   forceCollider: {fileID: 5115114000579937274}
   fallMultiplier: 1.5
   maxJumpHeight: 2
-  maxJumpTime: 0.8
+  maxJumpTime: 1.06
   environment:
     serializedVersion: 2
     m_Bits: 64
@@ -1110,6 +1110,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e1556e958eee48ddac1fdd7369ad151, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <MaxHealth>k__BackingField: 100
 --- !u!114 &3138589315882943035
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1122,15 +1123,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33bf525a0ad0147899f636e33c396549, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  equipmentPointLeft: {fileID: 1076138515326793455}
-  equipmentPointRight: {fileID: 2072332135215851105}
+  animator: {fileID: 6258160302546395036}
+  leftArm: {fileID: 1076138515326793455}
+  rightArm: {fileID: 2072332135215851105}
   clearOnQuit: 1
   X_SPACE_BETWEEN_ITEM: 80
   Y_SPACE_BETWEEN_ITEM: 80
-  NUMBER_OF_COLUMNS: 10
+  NUMBER_OF_COLUMNS: 8
   equipmentUICell: {fileID: 5036363161630187156, guid: 7e710988ba6d34375841700190a1dbff,
     type: 3}
   equipmentInventoryPanel: {fileID: 0}
+  weaponSlot: {fileID: 0}
   equipmentInventory: {fileID: 11400000, guid: 030e771487edc42dca09b8e3450d3bf8, type: 2}
   consumablesInventory: {fileID: 11400000, guid: 49e0ec99a96a74f7888ff826f443d8dc,
     type: 2}
@@ -1212,14 +1215,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2072332135215851105}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0.00562, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5418078919906499476}
   m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &2081437397624909655
 GameObject:
   m_ObjectHideFlags: 0
