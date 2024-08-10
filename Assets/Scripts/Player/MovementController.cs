@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+/* Depricated */
 public class MovementController : MonoBehaviour {
     PlayerInputActions playerInputActions;
     CharacterController characterController;
@@ -346,13 +347,5 @@ public class MovementController : MonoBehaviour {
 
     private void OnDisable() {
         playerInputActions.CharacterControls.Disable();
-    }
-
-    public Vector3 CurrentMovement() {
-        return currentMovement;
-    }
-
-    public bool IsForceModeEnabled() {
-        return isForceModeEnabled;
     }
 }

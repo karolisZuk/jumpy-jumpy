@@ -1015,11 +1015,11 @@ GameObject:
   m_Component:
   - component: {fileID: 6317724482297215711}
   - component: {fileID: 549569943167825155}
-  - component: {fileID: 6967373274795556162}
   - component: {fileID: 150942960640387778}
   - component: {fileID: 3138589315882943035}
   - component: {fileID: 6952056483518922957}
   - component: {fileID: 5115114000579937274}
+  - component: {fileID: 4977873377025914719}
   m_Layer: 8
   m_Name: Player Obj
   m_TagString: Player
@@ -1070,34 +1070,6 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.8, z: 0}
---- !u!114 &6967373274795556162
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1965575058594968752}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4cf463685cdeb4b9e8c2017b8bc82030, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 6258160302546395036}
-  landingParticles: {fileID: 4514597317879345990, guid: 0f3d94cb11ecf47178adcee21dca610e,
-    type: 3}
-  walkMultiplier: 1.2
-  rotationFactorPerFrame: 40
-  runMultiplier: 5
-  dodgeMultiplier: 5.5
-  smoothInputSpeed: 0.15
-  alwaysRun: 1
-  forceCollider: {fileID: 5115114000579937274}
-  fallMultiplier: 1.5
-  maxJumpHeight: 2
-  maxJumpTime: 1.06
-  environment:
-    serializedVersion: 2
-    m_Bits: 64
 --- !u!114 &150942960640387778
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1192,6 +1164,36 @@ CapsuleCollider:
   m_Height: 1.56
   m_Direction: 1
   m_Center: {x: 0, y: 0.8, z: 0}
+--- !u!114 &4977873377025914719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1965575058594968752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1a0adda420f84ef083b94276902e0f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 6258160302546395036}
+  landingParticles: {fileID: 4514597317879345990, guid: 0f3d94cb11ecf47178adcee21dca610e,
+    type: 3}
+  currentMovementInput: {x: 0, y: 0}
+  currentMovement: {x: 0, y: 0, z: 0}
+  appliedMovement: {x: 0, y: 0, z: 0}
+  walkMultiplier: 1.2
+  rotationFactorPerFrame: 40
+  runMultiplier: 5
+  dodgeMultiplier: 5.5
+  smoothInputSpeed: 0.15
+  alwaysRun: 1
+  fallMultiplier: 4
+  maxJumpHeight: 2.2
+  maxJumpTime: 1.06
+  environment:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &2072332135215851105
 GameObject:
   m_ObjectHideFlags: 0
