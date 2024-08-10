@@ -1193,7 +1193,10 @@ MonoBehaviour:
   maxJumpTime: 1.06
   environment:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
+  isJumpingHash: -357477766
+  isLandingHash: -1979867691
+  isFallingHash: -1829127916
 --- !u!1 &2072332135215851105
 GameObject:
   m_ObjectHideFlags: 0

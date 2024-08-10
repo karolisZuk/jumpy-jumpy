@@ -6,6 +6,7 @@ public class PlayerFallState : PlayerBaseState, IRootState {
     }
 
     public override void EnterState() {
+        Ctx.IsLandingAnimating = false;
         InitializeSubState();
     }
 
@@ -14,6 +15,15 @@ public class PlayerFallState : PlayerBaseState, IRootState {
 
         if (Ctx.appliedMovement.y < Ctx.Gravity * 1.1f && !Ctx.Animator.GetBool(Ctx.isFallingHash)) {
             Ctx.Animator.SetBool(Ctx.isFallingHash, true);
+        }
+
+        RaycastHit hit;
+        if (Physics.Raycast(Ctx.transform.position, Ctx.transform.TransformDirection(Vector3.down), out hit, .1f, Ctx.Environment)) {
+            if (!Ctx.IsLandingAnimating) {
+                Ctx.Animator.SetBool(Ctx.isFallingHash, false);
+                Ctx.IsLandingAnimating = true;
+                Ctx.InstantiateLandingDust();
+            }
         }
 
         CheckSwitchStates();

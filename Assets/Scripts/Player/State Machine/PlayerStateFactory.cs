@@ -6,7 +6,8 @@ enum PlayerStates {
     run,
     grounded,
     jump,
-    fall
+    fall,
+    dodge
 }
 
 public class PlayerStateFactory {
@@ -21,6 +22,7 @@ public class PlayerStateFactory {
         states[PlayerStates.jump] = new PlayerJumpState(context, this);
         states[PlayerStates.grounded] = new PlayerGroundedState(context, this);
         states[PlayerStates.fall] = new PlayerFallState(context, this);
+        states[PlayerStates.dodge] = new PlayerDodgeState(context, this);
     }
 
     public PlayerBaseState Idle() {
@@ -45,5 +47,9 @@ public class PlayerStateFactory {
 
     public PlayerBaseState Fall() {
         return states[PlayerStates.fall];
+    }
+
+    public PlayerBaseState Landing() {
+        return states[PlayerStates.dodge];
     }
 }

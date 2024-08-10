@@ -1,6 +1,8 @@
 using UnityEngine;
 
 public class PlayerJumpState : PlayerBaseState, IRootState {
+    bool isLanding;
+
     public PlayerJumpState(PlayerStateMachine currentContext, PlayerStateFactory playerStateFactory): base(currentContext, playerStateFactory) {
         IsRootState = true;
     }
@@ -12,12 +14,13 @@ public class PlayerJumpState : PlayerBaseState, IRootState {
     }
 
     public override void EnterState() {
+        isLanding = false;
+
         InitializeSubState();
         HandleJump();
     }
 
     public override void ExitState() {
-        Ctx.InstantiateLandingDust();
         Ctx.Animator.SetBool(Ctx.isJumpingHash, false);
         Ctx.Animator.SetBool(Ctx.isLandingHash, false);
         Ctx.IsLandingAnimating = false;
@@ -65,13 +68,15 @@ public class PlayerJumpState : PlayerBaseState, IRootState {
         if (isFalling) {
             float previousYVelocity = Ctx.currentMovement.y;
             Ctx.currentMovement.y = Ctx.currentMovement.y + (Ctx.Gravity * Ctx.fallMultiplier * Time.deltaTime);
-            Ctx.appliedMovement.y = Mathf.Max((previousYVelocity + Ctx.currentMovement.y) * .5f, -20f);
+            Ctx.appliedMovement.y = Mathf.Max((previousYVelocity + Ctx.currentMovement.y) * .4f, -20f);
 
             RaycastHit hit;
-            if (Physics.Raycast(Ctx.transform.position, Ctx.transform.TransformDirection(Vector3.down), out hit, 1f, Ctx.Environment)) {
+            if (Physics.Raycast(Ctx.transform.position, Ctx.transform.TransformDirection(Vector3.down), out hit, .2f, Ctx.Environment)) {
                 if (!Ctx.IsLandingAnimating) {
+                    isLanding = true;
                     Ctx.Animator.SetBool(Ctx.isLandingHash, true);
                     Ctx.IsLandingAnimating = true;
+                    Ctx.InstantiateLandingDust();
                 }
             }
 
