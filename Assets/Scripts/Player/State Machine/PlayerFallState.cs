@@ -21,6 +21,7 @@ public class PlayerFallState : PlayerBaseState, IRootState {
         if (Physics.Raycast(Ctx.transform.position, Ctx.transform.TransformDirection(Vector3.down), out hit, .1f, Ctx.Environment)) {
             if (!Ctx.IsLandingAnimating) {
                 Ctx.Animator.SetBool(Ctx.isFallingHash, false);
+                Ctx.Animator.SetBool(Ctx.isHardLandingHash, true);
                 Ctx.IsLandingAnimating = true;
                 Ctx.InstantiateLandingDust();
             }

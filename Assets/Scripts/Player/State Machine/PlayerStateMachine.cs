@@ -84,6 +84,7 @@ public class PlayerStateMachine : MonoBehaviour {
     [HideInInspector] public int isLandingHash = Animator.StringToHash("isLanding");
     [HideInInspector] public int isHardLandingHash = Animator.StringToHash("isHardLanding");
     [HideInInspector] public int isFallingHash = Animator.StringToHash("isFalling");
+    [HideInInspector] public int isPushingHash = Animator.StringToHash("isPushing");
     #endregion
 
     #region Getters and Setters

@@ -1,8 +1,6 @@
 using UnityEngine;
 
 public class PlayerJumpState : PlayerBaseState, IRootState {
-    bool isLanding;
-
     public PlayerJumpState(PlayerStateMachine currentContext, PlayerStateFactory playerStateFactory): base(currentContext, playerStateFactory) {
         IsRootState = true;
     }
@@ -14,8 +12,6 @@ public class PlayerJumpState : PlayerBaseState, IRootState {
     }
 
     public override void EnterState() {
-        isLanding = false;
-
         InitializeSubState();
         HandleJump();
     }
@@ -73,7 +69,6 @@ public class PlayerJumpState : PlayerBaseState, IRootState {
             RaycastHit hit;
             if (Physics.Raycast(Ctx.transform.position, Ctx.transform.TransformDirection(Vector3.down), out hit, .2f, Ctx.Environment)) {
                 if (!Ctx.IsLandingAnimating) {
-                    isLanding = true;
                     Ctx.Animator.SetBool(Ctx.isLandingHash, true);
                     Ctx.IsLandingAnimating = true;
                     Ctx.InstantiateLandingDust();
