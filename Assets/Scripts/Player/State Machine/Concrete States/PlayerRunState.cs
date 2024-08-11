@@ -17,10 +17,12 @@ public class PlayerRunState : PlayerBaseState {
         Vector3 wallCheckRayCenter = Ctx.transform.position;
         wallCheckRayCenter.y += .5f;
 
-        if (Physics.Raycast(wallCheckRayCenter, Ctx.transform.TransformDirection(Vector3.forward), out hit, 1f, Ctx.Environment)) {
-            Ctx.Animator.SetBool(Ctx.isPushingHash, true);
-        } else {
-            Ctx.Animator.SetBool(Ctx.isPushingHash, false);
+        if (!Ctx.IsDodging) {
+            if ( Physics.Raycast(wallCheckRayCenter, Ctx.transform.TransformDirection(Vector3.forward), out hit, 1f, Ctx.Environment)) {
+                Ctx.Animator.SetBool(Ctx.isPushingHash, true);
+            } else {
+                Ctx.Animator.SetBool(Ctx.isPushingHash, false);
+            }
         }
 
         CheckSwitchStates();
@@ -34,9 +36,15 @@ public class PlayerRunState : PlayerBaseState {
         if (!Ctx.IsMovementPressed) {
             Ctx.Animator.SetBool(Ctx.isPushingHash, false);
             SwitchState(Factory.Idle());
-        } else if (Ctx.IsMovementPressed && !Ctx.IsRunPressed) {
+        }
+        
+        else if (Ctx.IsMovementPressed && !Ctx.IsRunPressed) {
             Ctx.Animator.SetBool(Ctx.isPushingHash, false);
             SwitchState(Factory.Walk());
+        }
+        
+        else if (Ctx.IsDodgePressed && Ctx.CharacterController.isGrounded && !Ctx.IsLandingAnimating) {
+            SwitchState(Factory.Dodge());
         }
     }
 }

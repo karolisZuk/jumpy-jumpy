@@ -49,7 +49,7 @@ public class PlayerStateFactory {
         return states[PlayerStates.fall];
     }
 
-    public PlayerBaseState Landing() {
+    public PlayerBaseState Dodge() {
         return states[PlayerStates.dodge];
     }
 }

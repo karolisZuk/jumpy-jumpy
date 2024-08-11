@@ -4239,7 +4239,7 @@ PrefabInstance:
     - target: {fileID: 4977873377025914719, guid: 1f3cc52ee737d43f0a5af591eabf1d72,
         type: 3}
       propertyPath: dodgeMultiplier
-      value: 7
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6317724482297215711, guid: 1f3cc52ee737d43f0a5af591eabf1d72,
         type: 3}

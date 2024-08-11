@@ -85,6 +85,8 @@ public class PlayerStateMachine : MonoBehaviour {
     [HideInInspector] public int isHardLandingHash = Animator.StringToHash("isHardLanding");
     [HideInInspector] public int isFallingHash = Animator.StringToHash("isFalling");
     [HideInInspector] public int isPushingHash = Animator.StringToHash("isPushing");
+    [HideInInspector] public int dodgeHash = Animator.StringToHash("Dodge");
+
     #endregion
 
     #region Getters and Setters
@@ -105,6 +107,10 @@ public class PlayerStateMachine : MonoBehaviour {
     public int IsWalkingHash { get { return isWalkingHash; } }
     public int IsRunningHash { get { return isRunningHash; } }
     public Vector2 CurrentVectorInput { get { return currentVectorInput; } }
+    public float CurrentVectorInputX { set { currentVectorInput.x = value; } }
+    public float CurrentVectorInputY { set { currentVectorInput.y = value; } }
+    public bool IsDodgePressed { get { return isDodgePressed; } set { isDodgePressed = value; } }
+    public bool IsDodging { get { return isDodging; } set { isDodging = value; }}
 
     #endregion
 
@@ -185,7 +191,7 @@ public class PlayerStateMachine : MonoBehaviour {
 
     #region Force mode
 
-    private void EnableForceMode() {
+    public void EnableForceMode() {
         isForceModeEnabled = true;
         rb.isKinematic = false;
         rb.detectCollisions = true;
@@ -193,7 +199,7 @@ public class PlayerStateMachine : MonoBehaviour {
         forceCollider.enabled = true;
     }
 
-    private void DisableForceMode() {
+    public void DisableForceMode() {
         isForceModeEnabled = false;
         rb.isKinematic = true;
         rb.detectCollisions = false;

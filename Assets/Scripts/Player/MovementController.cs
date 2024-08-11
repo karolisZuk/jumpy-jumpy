@@ -192,7 +192,6 @@ public class MovementController : MonoBehaviour {
 
             StartCoroutine(StopDodge());
         }
-
     }
 
     private IEnumerator StopDodge() {

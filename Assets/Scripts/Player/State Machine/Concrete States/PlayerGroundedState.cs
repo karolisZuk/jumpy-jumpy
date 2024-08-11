@@ -15,9 +15,13 @@ public class PlayerGroundedState : PlayerBaseState, IRootState {
     public override void InitializeSubState() {
         if (!Ctx.IsMovementPressed && !Ctx.IsRunPressed) {
             SetSubState(Factory.Idle());
-        } else if (Ctx.IsMovementPressed && !Ctx.IsRunPressed) {
+        }
+        
+        else if (Ctx.IsMovementPressed && !Ctx.IsRunPressed) {
             SetSubState(Factory.Walk());
-        } else {
+        }
+
+        else {
             SetSubState(Factory.Run());
         }
     }
